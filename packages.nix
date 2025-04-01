@@ -39,9 +39,13 @@ with pkgs; [
   vim
   neovim
 
-  # cabal-install
-  # ghc
-  # haskell-stack
+  ghc
+  cabal-install
+  haskellPackages.Agda
+  # stack
+  # haskell-language-server
+  # zlib
+  # zlib.dev
 
   opam
   coq

@@ -32,13 +32,6 @@
 (use-package org-agenda
  :ensure org)
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (global-undo-tree-mode)
-)
-(setq evil-undo-system 'undo-tree)
-
 (use-package evil
  :ensure t
  :init
@@ -63,7 +56,13 @@
   :after vimish-fold
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 (use-package evil-visual-mark-mode
-  :ensure t)
+  :ensure t
+  :init (evil-visual-mark-mode 1)
+(use-package evil-lion
+  :ensure t
+  :config
+  (evil-lion-mode))
+;; TODO look into evil embrace
 
 (use-package auctex)
 
@@ -92,13 +91,23 @@
  )
 
 (use-package ivy
-  :ensure t
-  :init
+  :config
   (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-fuzzy))) ; Enable fuzzy finding
+  (setq ivy-initial-inputs-alist nil) ; Remove initial ^ input
+  (setq ivy-height 30)
+  (setq ivy-extra-directories ())
 )
 
-
-(setq ivy-extra-directories ())
+;; Install wgrep package for editable grep buffers
+(use-package wgrep
+  :ensure t
+  :config
+  (setq wgrep-auto-save-buffer nil)
+  (setq wgrep-change-readonly-file t))
 
 (use-package counsel
   :ensure t
@@ -107,27 +116,33 @@
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history))
   :config
-  (counsel-mode 1))
+  (counsel-mode 1)
+  )
 
 (use-package ivy-rich
   :ensure t
   :init (ivy-rich-mode 1))
 
+(use-package swiper :after ivy)
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  (setq projectile-completion-system 'ivy)
+)
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :config
+  (counsel-projectile-mode 1))
 
 (use-package dashboard
   :ensure t
   :config
   (dashboard-setup-startup-hook))
 
-;; Configure the content of the dashboard
 (setq dashboard-items '((recents . 10)
-                        (projects . 10)
-      ))
-
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1))
+                        (projects . 10)))
 
 (use-package which-key
   :ensure t
@@ -161,7 +176,7 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
-(use-package hl-todo :ensure t :init (hl-todo-mode 1))
+(use-package hl-todo :ensure t :init (global-hl-todo-mode 1))
 (use-package unicode-fonts :ensure t)
 
 (defun kill-other-buffers ()
@@ -246,11 +261,21 @@ If PATH is not specified, default to the current buffer's file."
     ">" '(find-file-other-frame :which-key "Find file (new frame)")
     "," '(consult-buffer :which-key "consult-buffer")
     ":" '(execute-extended-command :which-key "M-x")
-    "x" '(open-scratch-buffer :which-key "Open scratch buffer")
+    "x" '(scratch-buffer :which-key "Open scratch buffer")
     "d" '(dired-jump :which-key "dired-jump")
-    "/" '(+consult/ripgrep :which-key "+consult/ripgrep")
-    "?" '(consult-ripgrep :which-key "consult-ripgrep")
+    "?" '(counsel-rg :which-key "counsel-rg")
     "v" '(vterm-toggle :which-key "vterm-toggle")
+
+    ;; Search bindings
+    "s" '(:ignore t :which-key "search")
+    "s p" '(counsel-projectile-rg :which-key "search project")
+    "s d" '(counsel-rg :which-key "search directory")
+    "s s" '(swiper :which-key "swiper")
+
+    ;; Project bindings
+    "p" '(:ignore t :which-key "project")
+    "p f" '(counsel-projectile-find-file :which-key "find file in project")
+    "p p" '(counsel-projectile-switch-project :which-key "switch project")
 
     ;; editor
     "e" '(:ignore t :which-key "Editor")
@@ -319,15 +344,15 @@ If PATH is not specified, default to the current buffer's file."
     "tv" '(visual-line-mode :which-key "visual-line-mode")
 
     ;; tabs
-    "TAB" '(:ignore t :which-key "Tabs")
-    "TAB TAB" '(tab-bar-switch-to-tab :which-key "tab-bar-switch-to-tab")
-    "TAB [" '(+tab-bar/switch-to-prev-tab :which-key "+tab-bar/switch-to-prev-tab")
-    "TAB ]" '(t+ab-bar/switch-to-next-tab :which-key "+tab-bar/switch-to-next-tab")
-    "TAB n" '(+tab-bar/add-new :which-key "+tab-bar/add-new")
-    "TAB k" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
-    "TAB d" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
-    "TAB K" '(+tab-bar/close-all-tabs-except-current :which-key "+tab-bar/close-all-tabs-except-current")
-    "TAB r" '(tab-rename :which-key "tab-rename")
+    ;; "TAB" '(:ignore t :which-key "Tabs")
+    ;; "TAB TAB" '(tab-bar-switch-to-tab :which-key "tab-bar-switch-to-tab")
+    ;; "TAB [" '(+tab-bar/switch-to-prev-tab :which-key "+tab-bar/switch-to-prev-tab")
+    ;; "TAB ]" '(+tab-bar/switch-to-next-tab :which-key "+tab-bar/switch-to-next-tab")
+    ;; "TAB n" '(+tab-bar/add-new :which-key "+tab-bar/add-new")
+    ;; "TAB k" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
+    ;; "TAB d" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
+    ;; "TAB K" '(+tab-bar/close-all-tabs-except-current :which-key "+tab-bar/close-all-tabs-except-current")
+    ;; "TAB r" '(tab-rename :which-key "tab-rename")
 
     ;; quick tab switching
     "1" '((lambda () (interactive) (+tab-bar/switch-by-index 0)) :which-key nil)
@@ -353,28 +378,17 @@ If PATH is not specified, default to the current buffer's file."
     ;; https://github.com/emacs-evil/evil-magit/issues/14#issuecomment-626583736
     :keymaps 'transient-base-map
     "<escape>" 'transient-quit-one)
-
-  ;; magit keybindings
-  ;; TODO refactor within use-package
-  (general-define-key
-    :states '(normal visual)
-    :keymaps 'magit-mode-map
-    ;; rebind "q" in magit-status to kill the magit buffers instead of burying them
-    "q" '+magit/quit
-
-    ;; tab switching within magit
-    "M-1" (lambda () (interactive) (+tab-bar/switch-by-index 0))
-    "M-2" (lambda () (interactive) (+tab-bar/switch-by-index 1))
-    "M-3" (lambda () (interactive) (+tab-bar/switch-by-index 2))
-    "M-4" (lambda () (interactive) (+tab-bar/switch-by-index 3))
-    "M-5" (lambda () (interactive) (+tab-bar/switch-by-index 4))
-    "M-6" (lambda () (interactive) (+tab-bar/switch-by-index 5))
-    "M-7" (lambda () (interactive) (+tab-bar/switch-by-index 6))
-    "M-8" (lambda () (interactive) (+tab-bar/switch-by-index 7))
-    "M-9" (lambda () (interactive) (+tab-bar/switch-by-index 8))))
+  )
+)
 
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
+(defun setup-agda2-evil-keybindings ()
+  "Configure keybindings for working with Agda in Evil mode."
+  (evil-define-key 'normal agda2-mode-map
+    "gd" 'agda2-goto-definition-keyboard))
+
+(add-hook 'agda2-mode-hook #'setup-agda2-evil-keybindings)
 
 (use-package exec-path-from-shell
   :ensure t
