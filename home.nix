@@ -12,6 +12,9 @@ in
         recursive = true;
       };
     };
+    sessionVariables = {
+      EDITOR = "emacs";
+    };
   };
 
   programs.fzf = {
@@ -51,4 +54,8 @@ in
       cd = "z";
     };
   };
+
+  programs.home-manager.enable = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

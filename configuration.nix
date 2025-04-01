@@ -12,6 +12,8 @@
 
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Enable Zsh shell
   programs.zsh.enable = true;
 }

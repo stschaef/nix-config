@@ -203,9 +203,9 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
 (global-auto-revert-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
@@ -283,6 +283,14 @@ If PATH is not specified, default to the current buffer's file."
               (kill-buffer buffer)))
           (message "Deleted %S" short-path))))))
 
+
+;; Define a function to copy entire buffer to clipboard
+(defun copy-whole-buffer-to-clipboard ()
+  "Copy entire buffer to clipboard"
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max))
+  (message "Buffer copied to clipboard"))
+
 (use-package general
   :config
   (general-evil-setup t)
@@ -357,6 +365,7 @@ If PATH is not specified, default to the current buffer's file."
     "bl" '(evil-switch-to-windows-last-buffer :which-key "Switch to last buffer")
     "br" '(revert-buffer-no-confirm :which-key "Revert buffer")
     "bK" '(kill-other-buffers :which-key "Kill other buffers")
+    "by" '(copy-whole-buffer-to-clipboard :which-key "Copy buffer")
 
     ;; open
     "o" '(:ignore t :which-key "Open")
