@@ -89,6 +89,7 @@
   :ensure t
   :init (evil-commentary-mode 1)
  )
+(evil-set-undo-system 'undo-redo)
 
 (use-package ivy
   :config
@@ -101,6 +102,34 @@
   (setq ivy-height 30)
   (setq ivy-extra-directories ())
 )
+
+;; Install required packages if not already installed
+(use-package prescient
+  :ensure t
+  :config
+  (prescient-persist-mode 1))
+
+(use-package ivy-prescient
+  :ensure t
+  :after (ivy prescient)
+  :config
+  (ivy-prescient-mode 1)
+
+  ;; Custom sorting function that puts dot files at the bottom
+  (defun my-prescient-sort-with-dot-files-last (candidates)
+    "Sort candidates using prescient, but put dot files at the bottom."
+    (let* ((sorted (prescient-sort candidates))
+           (dot-files (seq-filter (lambda (c)
+                                   (string-match-p "^\\." (file-name-nondirectory c)))
+                                 sorted))
+           (regular-files (seq-remove (lambda (c)
+                                      (string-match-p "^\\." (file-name-nondirectory c)))
+                                    sorted)))
+      (append regular-files dot-files)))
+
+  ;; Override the default sorting function for buffer switching
+  (setf (alist-get 'ivy-switch-buffer ivy-prescient-sort-commands)
+        #'my-prescient-sort-with-dot-files-last))
 
 ;; Install wgrep package for editable grep buffers
 (use-package wgrep
@@ -139,10 +168,25 @@
 (use-package dashboard
   :ensure t
   :config
-  (dashboard-setup-startup-hook))
-
-(setq dashboard-items '((recents . 10)
-                        (projects . 10)))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)
+  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-projects-sort-function
+        (lambda (projects)
+          (let ((recent-projects-list (projectile-relevant-known-projects)))
+            (if recent-projects-list
+                ;; Return only the most recent ones (limited by dashboard-items setting)
+                (seq-take recent-projects-list
+                          (cdr (assoc 'projects dashboard-items)))
+              projects))))
+  (setq dashboard-items '((recents . 10)
+                          (projects . 10)
+                          (bookmarks . 10)
+			  ))
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+)
 
 (use-package which-key
   :ensure t
