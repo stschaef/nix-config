@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Equational Reasoning
+# key: eq
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+?
+  ≡⟨ ? ⟩
+?
+∎

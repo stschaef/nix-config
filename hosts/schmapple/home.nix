@@ -1,21 +1,48 @@
 { config, pkgs, lib, inputs, system, ... }:
 
+# let
+#   # Create a proper wrapper for Homebrew Emacs
+#   homebrewEmacs = pkgs.stdenv.mkDerivation {
+#     pname = "emacs-plus-wrapper";
+#     version = "1.0.0";
+#
+#     buildInputs = [];
+#
+#     # Just create symlinks to the Homebrew binary
+#     phases = [ "installPhase" ];
+#     installPhase = ''
+#       mkdir -p $out/bin
+#       ln -s /opt/homebrew/bin/emacs $out/bin/emacs
+#       ln -s /opt/homebrew/bin/emacsclient $out/bin/emacsclient
+#     '';
+#
+#     meta = with pkgs.lib; {
+#       description = "Wrapper for Homebrew emacs-plus";
+#       platforms = platforms.darwin;
+#     };
+#   };
+# in
 {
   home = {
     username = "stevenschaefer";
     stateVersion = "24.11"; # Please read the comment before changing.
     packages = with pkgs; [
       raycast
+      aerospace
     ];
     file = {
-    # ".config/doom" = {
-    #   source = .dotfiles/doom;
-    #   recursive = true;
-    # };
+    ".config/aerospace" = {
+      source = ./aerospace;
+      recursive = true;
+    };
     };
     sessionVariables = {
       EDITOR = "emacs";
     };
+  };
+
+  xdg = {
+    enable = true;
   };
 
   programs.git = {
@@ -26,42 +53,21 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    zplug = {
-      enable = true;
-      plugins = [
-        { name = "mafredri/zsh-async";}
-        { name = "sindresorhus/pure"; tags = [ "use:pure.zsh" "as:theme" ];}
-        { name = "zdharma/fast-syntax-highlighting"; tags = [ "as:plugin" "defer:2" ];}
-        { name = "jeffreytse/zsh-vi-mode"; tags = [ "as:plugin" "defer:2" ];}
-      ];
-    };
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" "thefuck" "zoxide" ];
-    };
-    initExtra = ''
-      ZSH_THEME=""
-      source $ZSH/oh-my-zsh.sh
-      source <(fzf --zsh)
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
-      eval "$(${pkgs.thefuck}/bin/thefuck --alias)"
-      function zvm_after_init() {
-        zvm_bindkey viins "^R" fzf-history-widget
-      }
-      zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
-    '';
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # imports = [ 
+  #   (import ../../emacs.nix {
+  #     inherit config pkgs lib;
+  #     emacsPackage = homebrewEmacs;
+  #   }
+  #   )
+  # ];
+
+  # programs.emacs-macport = {
+  #   enable = true;
+  #   # package = homebrewEmacs;
+  # };
+
+
 }

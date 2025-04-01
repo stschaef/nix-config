@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Equational reasoning template
+# uuid: eqreas
+# key: eq
+# condition: t
+# --
+?
+  ≡⟨ ? ⟩
+?
+∎
