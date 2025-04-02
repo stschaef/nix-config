@@ -7,6 +7,9 @@
   # Auto upgrade nix package and the daemon service
   services.nix-daemon.enable = true;
 
+  # touchID for sudo
+  security.pam.enableSudoTouchIdAuth = true;
+
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
   # Enable Homebrew and install packages
@@ -22,14 +25,6 @@
 
     brews = [
       "emacs-plus@30"
-      "switchaudio-osx"
-      "nowplaying-cli"
-    ];
-
-    casks = [
-      "sf-symbols"
-      "font-sf-mono"
-      "font-sf-pro"
     ];
   };
 

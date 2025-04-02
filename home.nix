@@ -16,7 +16,7 @@ in
       EDITOR = "emacs";
     };
     packages = with pkgs; [
-        inputs.forester
+      # inputs.forester.legacyPackages.${system}.default
     ];
   };
 

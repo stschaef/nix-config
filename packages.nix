@@ -26,6 +26,11 @@ with pkgs; [
 
   cowsay
 
+  mu
+  isync
+  msmtp
+  offlineimap
+
   automake
   cmake
   gnumake
