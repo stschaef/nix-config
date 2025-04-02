@@ -211,8 +211,11 @@
 (column-number-mode 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;;(set-frame-font "JetBrains Mono-14:weight=medium" nil t)
-
+(set-face-attribute 'default nil
+		    :family "JetBrainsMono"
+		    :height 120
+		    :weight 'normal
+		    :width 'normal)
 
 (use-package company
   :ensure t
