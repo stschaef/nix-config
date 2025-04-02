@@ -19,12 +19,9 @@
       autoUpdate = true;
     };
 
-    taps = [
-      "d12frosted/emacs-plus"
-    ];
-
     brews = [
-      "emacs-plus@30"
+      "mu"
+      "cowsay"
     ];
   };
 

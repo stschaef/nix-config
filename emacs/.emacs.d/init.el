@@ -449,3 +449,41 @@ If PATH is not specified, default to the current buffer's file."
   :ensure t
   :config
   (exec-path-from-shell-initialize))
+
+;; (use-package mu4e
+;;   :ensure nil)
+
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+
+(cond
+ ;; macOS specific configuration
+ ((eq system-type 'darwin)
+  (setq mu4e-load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e/")
+ )
+
+ ;; Linux specific configuration
+ ((eq system-type 'gnu/linux)
+  (message "Need to implement mu4e on linux")
+ ))
+
+(use-package mu4e
+  :ensure nil
+  :load-path mu4e-load-path
+)
+
+(require 'smtpmail)
+
+(setq mu4e-mu-binary (executable-find "mu"))
+
+(setq mu4e-maildir "~/Mail")
+
+(setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
+(setq mu4e-update-interval 300)
+(setq mu4e-attachment-dir "~/Desktop/Attachments")
+(setq mu4e-change-filenames-when-moving t)
+(setq mu4e-user-mail-address-list '("schaefer.steven.ss@gmail.com"))

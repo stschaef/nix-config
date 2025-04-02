@@ -16,7 +16,4 @@
     userName = "Steven Schaefer";
     userEmail = "stschaef@umich.edu";
   };
-
-  programs.emacs.enable = true;
-  programs.emacs.package = pkgs.emacs30;
 }

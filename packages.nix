@@ -1,57 +1,62 @@
-{ pkgs }:
+{ pkgs, ... }:
 
-with pkgs; [
-  git
-  subversion
 
-  bash
+{
+  environment.systemPackages = with pkgs; [
+    git
+    subversion
 
-  zsh
+    bash
 
-  zoxide
-  thefuck
+    zsh
 
-  tmux
-  ripgrep
-  fd
-  gawk
-  gnused
-  gnutar
-  gnugrep
-  gnutls
-  fzf
-  tree
-  wget
-  fswatch
+    zoxide
+    thefuck
 
-  cowsay
+    tmux
+    ripgrep
+    fd
+    gawk
+    gnused
+    gnutar
+    gnugrep
+    gnutls
+    fzf
+    tree
+    wget
+    fswatch
 
-  mu
-  isync
-  msmtp
-  offlineimap
+    # mu # using homebrew instead because i can't find the mu4e .el's
+    isync
+    msmtp
+    # offlineimap
 
-  automake
-  cmake
-  gnumake
-  swig
+    pass
 
-  binutils
-  ffmpeg
-  gperf
-  libev
+    automake
+    cmake
+    gnumake
+    swig
 
-  vim
-  neovim
+    binutils
+    ffmpeg
+    gperf
+    libev
 
-  ghc
-  cabal-install
-  haskellPackages.Agda
-  # stack
-  # haskell-language-server
-  # zlib
-  # zlib.dev
+    vim
+    neovim
 
-  # opam
-  coq
-]
+    emacs30
+
+    ghc
+    cabal-install
+    haskellPackages.Agda
+    # stack
+    # haskell-language-server
+    # zlib
+    # zlib.dev
+
+    # opam
+    coq
+  ];
+}

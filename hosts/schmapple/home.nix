@@ -30,4 +30,8 @@
     userName = "Steven Schaefer";
     userEmail = "stschaef@umich.edu";
   };
+
+  programs.zsh.initExtra = lib.mkAfter ''
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  '';
 }

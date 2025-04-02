@@ -16,6 +16,8 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    community-emacs.url = "github:nix-community/emacs-overlay";
+
     # Homebrew package manager support
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
@@ -34,19 +36,18 @@
       flake = false;
     };
 
-    homebrew-emacs-plus = {
-      url = "github:d12frosted/homebrew-emacs-plus";
-      flake = false;
+    forester = {
+      url = "sourcehut:~jonsterling/ocaml-forester?ref=forester-5.0-dev";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # forester = {
-    #   url = "sourcehut:~jonsterling/ocaml-forester?ref=forester-5.0-dev";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core,
-              homebrew-cask, homebrew-bundle, homebrew-emacs-plus, zen-browser,
+  outputs = { self, nix-darwin, nixpkgs, home-manager,
+              community-emacs,
+              nix-homebrew, homebrew-core,
+              homebrew-cask, homebrew-bundle,
+              # homebrew-emacs-plus,
+              zen-browser,
               # forester,
               ... }@inputs:
   {
@@ -59,9 +60,13 @@
         ./hosts/schmapple/configuration.nix
 
         home-manager.darwinModules.home-manager {
+          nixpkgs.overlays = [ community-emacs.overlay ];
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; system = "aarch64-darwin"; };
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+            system = "aarch64-darwin";
+          };
           users.users.stevenschaefer = {
             home = "/Users/stevenschaefer";
           };
@@ -83,7 +88,6 @@
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
                 "homebrew/homebrew-bundle" = homebrew-bundle;
-                "d12frosted/homebrew-emacs-plus" = homebrew-emacs-plus;
               };
               mutableTaps = false;
             };
