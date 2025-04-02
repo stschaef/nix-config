@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   # Placeholder for future variables or configurations
@@ -8,13 +8,16 @@ in
     # Define file locations for configuration files
     file = {
       ".emacs.d" = {
-        source = ./.dotfiles/.emacs.d;
+        source = ./emacs/.emacs.d;
         recursive = true;
       };
     };
     sessionVariables = {
       EDITOR = "emacs";
     };
+    packages = with pkgs; [
+        inputs.forester
+    ];
   };
 
   programs.fzf = {

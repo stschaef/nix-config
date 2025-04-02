@@ -38,10 +38,16 @@
       url = "github:d12frosted/homebrew-emacs-plus";
       flake = false;
     };
+
+    forester = {
+      url = "sourcehut:~jonsterling/ocaml-forester?ref=forester-5.0-dev";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core,
-              homebrew-cask, homebrew-bundle, homebrew-emacs-plus, zen-browser, ... }@inputs:
+              homebrew-cask, homebrew-bundle, homebrew-emacs-plus, zen-browser,
+              forester, ... }@inputs:
   {
     darwinConfigurations."schmapple" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";

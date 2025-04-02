@@ -17,5 +17,4 @@
   fonts.packages = with pkgs; [
     nerdfonts
   ];
-  fonts.fontconfig.enable = true;
 }

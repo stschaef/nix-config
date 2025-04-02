@@ -8,7 +8,6 @@
     stateVersion = "24.11";
 
     packages = [
-      # inputs.zen-browser.packages."${system}".default
     ];
   };
 
