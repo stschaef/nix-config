@@ -57,7 +57,7 @@
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 (use-package evil-visual-mark-mode
   :ensure t
-  :init (evil-visual-mark-mode 1)
+  :init (evil-visual-mark-mode 1))
 (use-package evil-lion
   :ensure t
   :config
@@ -211,7 +211,7 @@
 (column-number-mode 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(set-frame-font "JetBrains Mono-14:weight=medium" nil t)
+;;(set-frame-font "JetBrains Mono-14:weight=medium" nil t)
 
 
 (use-package company
@@ -431,7 +431,6 @@ If PATH is not specified, default to the current buffer's file."
     ;; https://github.com/emacs-evil/evil-magit/issues/14#issuecomment-626583736
     :keymaps 'transient-base-map
     "<escape>" 'transient-quit-one)
-  )
 )
 
 (load-file (let ((coding-system-for-read 'utf-8))

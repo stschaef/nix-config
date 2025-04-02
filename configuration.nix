@@ -7,13 +7,15 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Auto upgrade nix package and the daemon service
-  services.nix-daemon.enable = true;
-
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable Zsh shell
   programs.zsh.enable = true;
+
+  fonts.packages = with pkgs; [ 
+    (nerdfonts.override {fonts = [ "JetBrainsMono" ]; })
+  ];
+  fonts.fontconfig.enable = true;
 }

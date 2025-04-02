@@ -8,8 +8,6 @@ with pkgs; [
   zoxide
   thefuck
 
-  inputs.zen-browser.packages."${system}".default
-
   vulkan-tools
   vulkan-loader
   vulkan-validation-layers

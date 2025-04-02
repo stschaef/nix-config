@@ -4,6 +4,9 @@
   # Basic system settings
   nixpkgs.hostPlatform = "aarch64-darwin"; # or x86_64-darwin for Intel
 
+  # Auto upgrade nix package and the daemon service
+  services.nix-daemon.enable = true;
+
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
   # Enable Homebrew and install packages
