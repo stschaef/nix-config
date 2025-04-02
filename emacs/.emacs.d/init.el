@@ -212,7 +212,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (set-face-attribute 'default nil
-		    :family "JetBrainsMono"
+		    :family "JetBrainsMono Nerd Font"
 		    :height 120
 		    :weight 'normal
 		    :width 'normal)

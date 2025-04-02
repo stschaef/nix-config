@@ -47,6 +47,6 @@ with pkgs; [
   # zlib
   # zlib.dev
 
-  opam
+  # opam
   coq
 ]
