@@ -10,7 +10,7 @@ IMAPAccount gmail
 Host imap.gmail.com
 User schaefer.steven.ss@gmail.com
 PassCmd "security find-generic-password -s mu4e-gmail -a schaefer.steven.ss@gmail.com -w"
-SSLType IMAPS
+TLSType IMAPS
 Pipelinedepth 1
 Timeout 60
 
@@ -25,5 +25,27 @@ SubFolders Verbatim
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
+Patterns *
+SyncState *
+
+IMAPAccount umich
+Host imap.gmail.com
+User stschaef@umich.edu
+PassCmd "security find-generic-password -s mu4e-umich -a stschaef@umich.edu -w"
+TLSType IMAPS
+Pipelinedepth 1
+Timeout 60
+
+IMAPStore umich-remote
+Account umich
+
+MaildirStore umich-local
+Path ~/Mail/Umich/
+Inbox ~/Mail/Umich/Inbox
+SubFolders Verbatim
+
+Channel umich
+Far :umich-remote:
+Near :umich-local:
 Patterns *
 SyncState *

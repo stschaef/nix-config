@@ -58,5 +58,9 @@
 
     # opam
     coq
+
+    (texliveFull.withPackages (ps: [
+      ps.latexmk
+    ]))
   ];
 }
