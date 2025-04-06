@@ -37,8 +37,7 @@
     };
 
     forester = {
-      url = "sourcehut:~jonsterling/ocaml-forester?ref=forester-5.0-dev";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "git+file:/Users/stevenschaefer/ocaml-forester";
     };
   };
 
@@ -46,9 +45,8 @@
               community-emacs,
               nix-homebrew, homebrew-core,
               homebrew-cask, homebrew-bundle,
-              # homebrew-emacs-plus,
               zen-browser,
-              # forester,
+              forester,
               ... }@inputs:
   {
     darwinConfigurations."schmapple" = nix-darwin.lib.darwinSystem {

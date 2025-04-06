@@ -12,6 +12,8 @@
 
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
+  nix.settings.trusted-users = [ "stevenschaefer" ];
+
   # Enable Homebrew and install packages
   homebrew = {
     enable = true;

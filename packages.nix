@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 
 {
@@ -57,10 +57,17 @@
     # zlib.dev
 
     # opam
+    # ocaml
+    # dune_3
+
     coq
 
     (texliveFull.withPackages (ps: [
       ps.latexmk
     ]))
+
+    cachix
+
+    inputs.forester.legacyPackages.${system}.forester
   ];
 }

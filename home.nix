@@ -18,7 +18,6 @@ in
       EDITOR = "emacs";
     };
     packages = with pkgs; [
-      # inputs.forester.legacyPackages.${system}.default
     ];
   };
 
@@ -61,6 +60,4 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
