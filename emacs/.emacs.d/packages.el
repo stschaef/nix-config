@@ -9,3 +9,9 @@
 
 (use-package nix-mode
   :mode "\\.nix\\'")
+
+;; Add the directory containing forester.el to load-path
+(add-to-list 'load-path "/Users/stevenschaefer/forester.el")
+
+;; Require the package
+(require 'forester)

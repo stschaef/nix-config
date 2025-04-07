@@ -49,7 +49,6 @@
     "eu" '(vundo :which-key "vundo")
     "ev" '(vundo :which-key "vundo")
     "er" '(query-replace :which-key "query-replace")
-    ;"ec" '(consult-theme :which-key "consult-theme")
     "ep" '(point-to-register :which-key "point-to-register")
     "es" '(consult-register-store :which-key "consult-register-store")
     "ej" '(jump-to-register :which-key "jump-to-register")
@@ -111,34 +110,17 @@
     "tI" '(toggle-indent-style :which-key "Indent style")
     "tv" '(visual-line-mode :which-key "visual-line-mode")
 
-    ;; tabs
-    ;; "TAB" '(:ignore t :which-key "Tabs")
-    ;; "TAB TAB" '(tab-bar-switch-to-tab :which-key "tab-bar-switch-to-tab")
-    ;; "TAB [" '(+tab-bar/switch-to-prev-tab :which-key "+tab-bar/switch-to-prev-tab")
-    ;; "TAB ]" '(+tab-bar/switch-to-next-tab :which-key "+tab-bar/switch-to-next-tab")
-    ;; "TAB n" '(+tab-bar/add-new :which-key "+tab-bar/add-new")
-    ;; "TAB k" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
-    ;; "TAB d" '(+tab-bar/close-tab :which-key "+tab-bar/close-tab")
-    ;; "TAB K" '(+tab-bar/close-all-tabs-except-current :which-key "+tab-bar/close-all-tabs-except-current")
-    ;; "TAB r" '(tab-rename :which-key "tab-rename")
-
-    ;; quick tab switching
-    "1" '((lambda () (interactive) (+tab-bar/switch-by-index 0)) :which-key nil)
-    "2" '((lambda () (interactive) (+tab-bar/switch-by-index 1)) :which-key nil)
-    "3" '((lambda () (interactive) (+tab-bar/switch-by-index 2)) :which-key nil)
-    "4" '((lambda () (interactive) (+tab-bar/switch-by-index 3)) :which-key nil)
-    "5" '((lambda () (interactive) (+tab-bar/switch-by-index 4)) :which-key nil)
-    "6" '((lambda () (interactive) (+tab-bar/switch-by-index 5)) :which-key nil)
-    "7" '((lambda () (interactive) (+tab-bar/switch-by-index 6)) :which-key nil)
-    "8" '((lambda () (interactive) (+tab-bar/switch-by-index 7)) :which-key nil)
-    "9" '((lambda () (interactive) (+tab-bar/switch-by-index 8)) :which-key nil)
-
     ;; git
     "g" '(:ignore t :which-key "Git") ; prefix
     "gg" '(magit-status :which-key "Git status")
 
     "qq" '(save-buffers-kill-terminal :which-key "Quit Emacs")
     "qr" '(restart-emacs :which-key "Restart Emacs")
+
+    ;; forester
+    "rn" '(forester-new-and-goto :which-key "Forester new tree")
+    "rt" '(forester-new-and-transclude-and-goto :which-key "Forester new tree")
+    "rd" '(forester-goto :which-key "Forester go to tree")
     )
 
   ;; magit

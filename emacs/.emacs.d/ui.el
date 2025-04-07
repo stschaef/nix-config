@@ -9,6 +9,9 @@
 
 (setq mac-command-modifier 'meta)
 
+(use-package rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 (use-package dashboard
   :ensure t
   :config
