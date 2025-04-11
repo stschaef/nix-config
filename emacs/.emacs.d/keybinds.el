@@ -44,26 +44,11 @@
     "p f" '(counsel-projectile-find-file :which-key "find file in project")
     "p p" '(counsel-projectile-switch-project :which-key "switch project")
 
-    ;; editor
-    "e" '(:ignore t :which-key "Editor")
-    "eu" '(vundo :which-key "vundo")
-    "ev" '(vundo :which-key "vundo")
-    "er" '(query-replace :which-key "query-replace")
-    "ep" '(point-to-register :which-key "point-to-register")
-    "es" '(consult-register-store :which-key "consult-register-store")
-    "ej" '(jump-to-register :which-key "jump-to-register")
-    "ef" '(:ignore t :which-key "Fold")
-    "efh" '(hs-hide-block :which-key "hs-hide-block")
-    "efs" '(hs-show-block :which-key "hs-show-block")
-    "efa" '(hs-show-all :which-key "hs-show-all")
+    ;; Evil window management
+    "w" '(evil-window-map :which-key "Evil window")
 
-    ;; consult
-    "c" '(:ignore t :which-key "consult")
-    "cf" '(consult-flymake :which-key "consult-flymake")
-    "ct" '(consult-theme :which-key "consult-theme")
-
-
-    "w" evil-window-map
+    ;; file
+    "f" '(:ignore t :which-key "File Management")
     "fr"   '(counsel-recentf :which-key "Recent files")
     "fR"   '(move-this-file :which-key "Move current file")
     "fD"   '(delete-this-file :which-key "Delete current file")
@@ -81,10 +66,6 @@
     "bK" '(kill-other-buffers :which-key "Kill other buffers")
     "by" '(copy-whole-buffer-to-clipboard :which-key "Copy buffer")
 
-    ;; open
-    "o" '(:ignore t :which-key "Open")
-    "oc" '(open-init-file :which-key "Open init.el")
-
     ;; project
     "p" '(:ignore t :which-key "Project")
     "pp" '(projectile-switch-project :which-key "Switch Project")
@@ -92,10 +73,10 @@
 
     ;; help
     "h" '(:ignore t :which-key "Help")
-    "hf" '(helpful-callable :which-key "describe-function")
-    "hk" '(helpful-key :which-key "describe-key")
-    "hv" '(helpful-variable :which-key "describe-variable")
-    "ho" '(helpful-symbol :which-key "describe-symbol")
+    "hf" '(describe-function :which-key "describe-function")
+    "hk" '(describe-key :which-key "describe-key")
+    "hv" '(describe-variable :which-key "describe-variable")
+    "ho" '(describe-symbol :which-key "describe-symbol")
     "hm" '(describe-mode :which-key "describe-mode")
     "hF" '(describe-face :which-key "describe-face")
     "hw" '(where-is :which-key "where-is")
@@ -104,20 +85,17 @@
     ;; toggles
     "t" '(:ignore t :which-key "Toggles")
     "ts" '(flyspell-mode :which-key "flyspell-mode")
-    "tf" '(flyspell-mode :which-key "flyspell-mode")
-    "tc" '(flymake-mode :which-key "flymake-mode")
-    "tg" '(evil-goggles-mode :which-key "evil-goggles")
-    "tI" '(toggle-indent-style :which-key "Indent style")
     "tv" '(visual-line-mode :which-key "visual-line-mode")
 
     ;; git
-    "g" '(:ignore t :which-key "Git") ; prefix
+    "g" '(:ignore t :which-key "Magit") ; prefix
     "gg" '(magit-status :which-key "Git status")
 
     "qq" '(save-buffers-kill-terminal :which-key "Quit Emacs")
     "qr" '(restart-emacs :which-key "Restart Emacs")
 
     ;; forester
+    "f" '(:ignore t :which-key "Forester")
     "rn" '(forester-new-and-goto :which-key "Forester new tree")
     "rt" '(forester-new-and-transclude-and-goto :which-key "Forester new tree")
     "rd" '(forester-goto :which-key "Forester go to tree")

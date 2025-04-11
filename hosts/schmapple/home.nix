@@ -34,6 +34,4 @@
   programs.zsh.initExtra = lib.mkAfter ''
     eval "$(/opt/homebrew/bin/brew shellenv)"
   '';
-
-  # nix.settings.trusted-users = [ "stevenschaefer" "root" ];
 }

@@ -68,25 +68,8 @@
 (setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
 
 (setq mu4e-compose-context-policy 'ask) ;; ask for context if no context matches;
-;; gpg encryptiom & decryption:
-
-;; this can be left alone
-
-;; (require 'epa-file)
-
-;; (epa-file-enable)
-
-;; (setq epa-pinentry-mode 'loopback)
-
-;; (auth-source-forget-all-cached)
-
-;; don't keep message compose buffers around after sending:
 
 (setq message-kill-buffer-on-exit t)
-
-;; (setq sendmail-program (executable-find "msmtp"))
-;; (setq sendmail-function 'message-send-mail-with-sendmail)
-;; (setq message-sendmail-envelope-from 'header)
 
 ;; With these lines
 (setq message-send-mail-function 'message-send-mail-with-sendmail
