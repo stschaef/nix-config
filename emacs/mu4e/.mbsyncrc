@@ -1,10 +1,10 @@
 # ~/.mbsyncrc
 
 CopyArrivalDate yes  # Don't mess up message timestamps when moving them between folders.
-Sync Pull            # Download changes only, don't sync local changes up to the server.
+Sync All             # Download changes only, don't sync local changes up to the server.
 Create Near          # Automatically create new folders in the local copy.
-Remove Near          # Automatically remove deleted folders from the local copy.
-Expunge Near         # Expunge deleted messages from the local copy.
+Remove Both          # Automatically remove deleted folders from the local copy.
+Expunge Both         # Expunge deleted messages from the local copy.
 
 IMAPAccount gmail
 Host imap.gmail.com
@@ -27,6 +27,7 @@ Far :gmail-remote:
 Near :gmail-local:
 Patterns *
 SyncState *
+Sync All
 
 IMAPAccount umich
 Host imap.gmail.com
@@ -49,3 +50,4 @@ Far :umich-remote:
 Near :umich-local:
 Patterns *
 SyncState *
+Sync All

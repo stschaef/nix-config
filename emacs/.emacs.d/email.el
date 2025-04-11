@@ -72,13 +72,13 @@
 
 ;; this can be left alone
 
-(require 'epa-file)
+;; (require 'epa-file)
 
-(epa-file-enable)
+;; (epa-file-enable)
 
-(setq epa-pinentry-mode 'loopback)
+;; (setq epa-pinentry-mode 'loopback)
 
-(auth-source-forget-all-cached)
+;; (auth-source-forget-all-cached)
 
 ;; don't keep message compose buffers around after sending:
 
