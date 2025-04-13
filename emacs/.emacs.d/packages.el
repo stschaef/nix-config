@@ -11,17 +11,21 @@
   :mode "\\.nix\\'")
 
 ;; TODO make forester.el config less brittle
-;; (cond
-;;   ((eq system-type 'darwin)
-;;    (setq forester-el-path "/Users/stevenschaefer/forester.el")
-;;   )
-;;   ((eq system-type 'gnu/linux)
-;;    (setq forester-el-path "/home/steven/forester.el")
-;;   )
-;; )
+(cond
+  ((eq system-type 'darwin)
+   (setq forester-el-path "/Users/stevenschaefer/forester.el")
+  )
+  ((eq system-type 'gnu/linux)
+   (setq forester-el-path "/home/steven/forester.el")
+  )
+)
 
-;; ;; Add the directory containing forester.el to load-path
-;; (add-to-list 'load-path forester-el-path)
+;; TODO handle error in forester.el where this variable
+;; is nil. As a quick fix make it empty
+(setq treesit-language-source-alist ())
 
-;; ;; Require the package
-;; (require 'forester)
+;; Add the directory containing forester.el to load-path
+(add-to-list 'load-path forester-el-path)
+
+;; Require the package
+(require 'forester)
