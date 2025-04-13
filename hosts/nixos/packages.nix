@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, inputs, ...}:
 
 with pkgs; [
   gnutls
@@ -23,4 +23,6 @@ with pkgs; [
   vulkan-tools
   vulkan-loader
   vulkan-validation-layers
+
+  inputs.zen-browser.packages."${system}".default
 ]

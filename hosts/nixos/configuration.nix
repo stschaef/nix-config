@@ -4,7 +4,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, inputs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -84,7 +83,7 @@
     open = true;
 
     nvidiaSettings = true;
-    powerManagement.enable = true;
+    powerManagement.enable = false;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
@@ -154,7 +153,7 @@
     dedicatedServer.openFirewall = true;
   };
 
-  environment.systemPackages = import ./packages.nix { inherit pkgs; };
+  environment.systemPackages = import ./packages.nix { inherit pkgs inputs; };
 
   users.defaultUserShell = pkgs.zsh;
 

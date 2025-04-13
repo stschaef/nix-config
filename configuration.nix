@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [ ./packages.nix ./tex.nix];
+  imports = [ ./packages.nix ./tex.nix ];
 
   # Enable nix-darwin's own Nix installation management
   nix.enable = true;

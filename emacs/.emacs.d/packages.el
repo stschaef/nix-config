@@ -10,8 +10,18 @@
 (use-package nix-mode
   :mode "\\.nix\\'")
 
-;; Add the directory containing forester.el to load-path
-(add-to-list 'load-path "/Users/stevenschaefer/forester.el")
+;; TODO make forester.el config less brittle
+;; (cond
+;;   ((eq system-type 'darwin)
+;;    (setq forester-el-path "/Users/stevenschaefer/forester.el")
+;;   )
+;;   ((eq system-type 'gnu/linux)
+;;    (setq forester-el-path "/home/steven/forester.el")
+;;   )
+;; )
 
-;; Require the package
-(require 'forester)
+;; ;; Add the directory containing forester.el to load-path
+;; (add-to-list 'load-path forester-el-path)
+
+;; ;; Require the package
+;; (require 'forester)

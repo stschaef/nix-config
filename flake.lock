@@ -96,17 +96,18 @@
         "opam-repository": "opam-repository"
       },
       "locked": {
-        "lastModified": 1743966147,
-        "narHash": "sha256-ibLa9Qbb3ePX97wGW92tZod/tcZ1u/1i6sse+RGuuQc=",
-        "ref": "refs/heads/forester-5.0-dev",
-        "rev": "90f0aceb1947825751ad05a5e6d7a5144fea3bf3",
-        "revCount": 1044,
+        "lastModified": 1744537866,
+        "narHash": "sha256-GJ2mL2hThTFbwLjENnHXhbFaGtdAfvOCRLkTYXAGGPY=",
+        "ref": "forester-5.0-dev",
+        "rev": "322de77ba15e989cfc8f043c9216ff1bb4be7adf",
+        "revCount": 1078,
         "type": "git",
-        "url": "file:/Users/stevenschaefer/ocaml-forester"
+        "url": "https://git.sr.ht/~jonsterling/ocaml-forester"
       },
       "original": {
+        "ref": "forester-5.0-dev",
         "type": "git",
-        "url": "file:/Users/stevenschaefer/ocaml-forester"
+        "url": "https://git.sr.ht/~jonsterling/ocaml-forester"
       }
     },
     "home-manager": {
@@ -287,11 +288,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1743827369,
-        "narHash": "sha256-rpqepOZ8Eo1zg+KJeWoq1HAOgoMCDloqv5r2EAa9TSA=",
+        "lastModified": 1744463964,
+        "narHash": "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "42a1c966be226125b48c384171c44c651c236c22",
+        "rev": "2631b0b7abcea6e640ce31cd78ea58910d31e650",
         "type": "github"
       },
       "original": {
@@ -379,11 +380,11 @@
         "opam2json": "opam2json"
       },
       "locked": {
-        "lastModified": 1743771026,
-        "narHash": "sha256-R/MlVlTRRCWL06gGe6z4JNDSM1QKbU/m8xpMTmcRes4=",
+        "lastModified": 1744377764,
+        "narHash": "sha256-CKZLqLgZtMrUyZKlroISYp6Z4aoN1N9xeyk0dPNxGvc=",
         "owner": "tweag",
         "repo": "opam-nix",
-        "rev": "2b4e01470e5449ffe27cc167226060ddf20dcf24",
+        "rev": "33a339b3a871eecfcb0ad3222366e6d8ce4bff6a",
         "type": "github"
       },
       "original": {
@@ -411,11 +412,11 @@
     "opam-repository": {
       "flake": false,
       "locked": {
-        "lastModified": 1743938288,
-        "narHash": "sha256-TEr5L++A6F288/5YW5j7WSFtTaItUbQ4u2De+vrlAto=",
+        "lastModified": 1744388127,
+        "narHash": "sha256-EgMUWmpHJEzwtN19Atho+OaF6KuhvrdR+oLTrpdF5hI=",
         "owner": "ocaml",
         "repo": "opam-repository",
-        "rev": "93853e3aedbab34334bbc4db0059886767ed665b",
+        "rev": "34a3fc46c301a891122df75c17fef6b5358bd68f",
         "type": "github"
       },
       "original": {

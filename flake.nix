@@ -37,7 +37,9 @@
     };
 
     forester = {
-      url = "git+file:/Users/stevenschaefer/ocaml-forester";
+      url = "https://git.sr.ht/~jonsterling/ocaml-forester";
+      ref = "forester-5.0-dev";
+      type = "git";
     };
   };
 
