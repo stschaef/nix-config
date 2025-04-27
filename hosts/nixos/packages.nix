@@ -25,4 +25,14 @@ with pkgs; [
   vulkan-validation-layers
 
   inputs.zen-browser.packages."${system}".default
+
+
+  lutris (
+    lutris.override {
+      extraPkgs = pkgs: [
+        pkgs.libnghttp2
+        pkgs.winetricks
+      ];
+    }
+  )
 ]
