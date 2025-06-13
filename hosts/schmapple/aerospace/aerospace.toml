@@ -146,7 +146,8 @@ alt-shift-5 = 'move-node-to-workspace 5'
 alt-shift-6 = 'move-node-to-workspace 6'
 
 alt-a = 'exec-and-forget open -a /Applications/Arc.app'
-alt-e = 'exec-and-forget open -a emacs'
+alt-z = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
+alt-e = 'exec-and-forget open -a /run/current-system/sw/bin/emacs'
 # alt-t = 'exec-and-forget open -a /Applications/iTerm.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -196,6 +197,10 @@ if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace b'
 
 [[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = 'move-node-to-workspace b'
+
+[[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-to-workspace t'
 
@@ -242,3 +247,8 @@ run = 'move-node-to-workspace p'
 [[on-window-detected]]
 if.app-id = 'com.gingerlabs.Notability'
 run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'NULL-APP-BUNDLE-ID'
+if.window-title-regex-substring	= 'python'
+run = 'move-node-to-workspace c'
