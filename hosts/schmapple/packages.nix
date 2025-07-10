@@ -5,5 +5,5 @@ with pkgs; [
   darwin.sigtool
   darwin.apple_sdk.frameworks.Security
   skimpdf
-  pdfpc
+  # pdfpc
 ]

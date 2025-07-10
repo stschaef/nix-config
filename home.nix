@@ -44,7 +44,8 @@ in
       enable = true;
       plugins = [ "git" "thefuck" "zoxide" ];
     };
-    initExtra = ''
+    initContent = ''
+      export PATH=$PATH:~/.cargo/bin
       ZSH_THEME=""
       source $ZSH/oh-my-zsh.sh
       source <(fzf --zsh)

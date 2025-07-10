@@ -2,13 +2,13 @@
   description = "Example nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11"; # Or your desired release
+      url = "github:nix-community/home-manager/release-25.05"; # Or your desired release
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -41,6 +41,11 @@
       ref = "forester-5.0-dev";
       type = "git";
     };
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nix-darwin, nixpkgs, home-manager,
@@ -49,6 +54,7 @@
               homebrew-cask, homebrew-bundle,
               zen-browser,
               forester,
+              rust-overlay,
               ... }@inputs:
   {
     darwinConfigurations."schmapple" = nix-darwin.lib.darwinSystem {
@@ -58,6 +64,11 @@
       modules = [
 	      ./configuration.nix
         ./hosts/schmapple/configuration.nix
+
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [ rust-overlay.overlays.default ];
+          environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
+        })
 
         home-manager.darwinModules.home-manager {
           nixpkgs.overlays = [ community-emacs.overlay ];

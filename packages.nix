@@ -56,5 +56,7 @@
     inputs.forester.legacyPackages.${system}.forester
 
     ispell
+
+    elan
   ];
 }

@@ -84,3 +84,7 @@
  `(agda2-highlight-error-face ((t (:foreground ,(my/catppuccin-get-color 'green)))))
  `(agda2-highlight-typechecks-face ((t (:foreground ,(my/catppuccin-get-color 'green)))))
 )
+
+(use-package org-bullets)
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))

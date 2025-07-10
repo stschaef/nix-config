@@ -120,7 +120,7 @@ alt-b = 'workspace b'
 alt-c = 'workspace c'
 alt-m = 'workspace m'
 alt-s = 'workspace s'
-alt-t = 'workspace t'
+alt-v = 'workspace v'
 alt-p = 'workspace p'
 
 alt-1 = 'workspace 1'
@@ -148,6 +148,7 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-a = 'exec-and-forget open -a /Applications/Arc.app'
 alt-z = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
 alt-e = 'exec-and-forget open -a /run/current-system/sw/bin/emacs'
+alt-t = 'exec-and-forget open -a /Applications/Ghostty.app'
 # alt-t = 'exec-and-forget open -a /Applications/iTerm.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -182,7 +183,7 @@ alt-shift-l = ['join-with right', 'mode main']
 b = ['^built-in retina display$']
 c = ["dell", "QHD", "LG", '^built-in retina display$']
 m = '^built-in retina display$'
-t = '^built-in retina display$'
+v = '^built-in retina display$'
 s = '^built-in retina display$'
 p = ["dell", '^built-in retina display$']
 1 = ["LG", "QHD", '^built-in retina display$']
@@ -202,11 +203,11 @@ run = 'move-node-to-workspace b'
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace t'
+run = 'move-node-to-workspace v'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace t'
+run = 'move-node-to-workspace v'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'emacs'

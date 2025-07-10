@@ -3,7 +3,7 @@
 {
   home = {
     username = "stevenschaefer";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
     packages = with pkgs; [
       raycast
       aerospace
@@ -31,7 +31,7 @@
     userEmail = "stschaef@umich.edu";
   };
 
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     eval "$(/opt/homebrew/bin/brew shellenv)"
   '';
 }

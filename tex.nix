@@ -18,11 +18,11 @@ let
       })
       (pkgs.fetchurl {
         url = "https://mirrors.ctan.org/macros/latex/contrib/acmart/acmart.dtx";
-        sha256 = "sha256-jmFW0I20bS9YhUq2PDR5j7PDh/wYYXcjqQazaswOGME=";
+        sha256 = "sha256-HOXMA80FeKIC/ggN3JOdVbRtopF/jtF5Yr4CnyR51Hg=";
       })
       (pkgs.fetchurl {
         url = "https://mirrors.ctan.org/macros/latex/contrib/acmart/ACM-Reference-Format.bst";
-        sha256 = "sha256-qfZih++Q0IsiNEogljsXD67IbibfFVP1CwXLuQ+1RfM=";
+        sha256 = "sha256-7g2f2Ea5XKi5t3IejZqqBmxkyeemEoTGMVz7uER5Sjk=";
       })
     ];
 

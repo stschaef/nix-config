@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports = [ ./packages.nix ./tex.nix ];
@@ -20,10 +20,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # nixpkgs.config.allowBroken = true;
+  # nixpkgs.config.allowUnsupportedSystem = true;
+
   # Enable Zsh shell
   programs.zsh.enable = true;
 
-  fonts.packages = with pkgs; [
-    nerdfonts
-  ];
+  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 }

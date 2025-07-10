@@ -4,11 +4,9 @@
   # Basic system settings
   nixpkgs.hostPlatform = "aarch64-darwin"; # or x86_64-darwin for Intel
 
-  # Auto upgrade nix package and the daemon service
-  services.nix-daemon.enable = true;
 
   # touchID for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   environment.systemPackages = import ./packages.nix { inherit pkgs; };
 
@@ -29,4 +27,7 @@
 
   # Used for backwards compatibility
   system.stateVersion = 4;
+  system.primaryUser = "stevenschaefer";
+
+  ids.gids.nixbld = 350;
 }
