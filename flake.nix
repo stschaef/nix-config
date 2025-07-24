@@ -38,7 +38,7 @@
 
     forester = {
       url = "https://git.sr.ht/~stschaef/ocaml-forester";
-      ref = "forester-5.0-dev";
+      ref = "main";
       type = "git";
     };
 

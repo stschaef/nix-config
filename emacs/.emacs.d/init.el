@@ -39,3 +39,5 @@
 			   (string-match-p "tex\\.el$" file))))
              (not (string-match-p "custom\\.el$" file)))
     (load file)))
+
+(setq warning-suppress-types '((lsp-mode)))
