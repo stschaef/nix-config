@@ -47,7 +47,8 @@
 
     ghc
     cabal-install
-    haskellPackages.Agda
+    # haskellPackages.Agda
+    haskellPackages.fix-whitespace
 
     coq
 

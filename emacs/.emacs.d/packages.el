@@ -48,6 +48,11 @@
 ;; Add the directory containing forester.el to load-path
 (add-to-list 'load-path forester-el-path)
 
+(defun setup-forester-evil-keybindings ()
+  "Configure keybindings for working with Agda in Evil mode."
+  (evil-define-key 'normal forester-mode-map
+    "gd" 'forester-goto))
+
 (add-to-list 'load-path lean4-mode-path)
 
 ;; Require the package

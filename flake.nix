@@ -42,6 +42,8 @@
       type = "git";
     };
 
+    agda.url = "github:agda/agda";
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,6 +56,7 @@
               homebrew-cask, homebrew-bundle,
               zen-browser,
               forester,
+              agda,
               rust-overlay,
               ... }@inputs:
   {
@@ -66,8 +69,10 @@
         ./hosts/schmapple/configuration.nix
 
         ({ pkgs, ... }: {
-          nixpkgs.overlays = [ rust-overlay.overlays.default ];
-          environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
+          nixpkgs.overlays = [ rust-overlay.overlays.default
+                               agda.overlays.default ];
+          environment.systemPackages = [ pkgs.rust-bin.stable.latest.default
+                                         pkgs.agda ];
         })
 
         home-manager.darwinModules.home-manager {

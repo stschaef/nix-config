@@ -95,10 +95,9 @@
     "qr" '(restart-emacs :which-key "Restart Emacs")
 
     ;; forester
-    "f" '(:ignore t :which-key "Forester")
-    "rn" '(forester-new-and-goto :which-key "Forester new tree")
-    "rt" '(forester-new-and-transclude-and-goto :which-key "Forester new tree")
-    "rd" '(forester-goto :which-key "Forester go to tree")
+    "n" '(:ignore t :which-key "Forester")
+    "nt" '(forester-new-and-goto :which-key "new tree")
+    "nc" '(forester-new-and-transclude-and-goto :which-key "transclude new tree")
     )
 
   ;; magit
