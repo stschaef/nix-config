@@ -15,6 +15,7 @@
     trusted-public-keys = [
       "forester.cachix.org-1:pErGVVci7kZWxxcbQ/To8Lvqp6nVTeyPf0efJxbrQDM="
     ];
+    allow-import-from-derivation = true;
   };
 
   # Allow unfree packages

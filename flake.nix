@@ -42,7 +42,7 @@
       type = "git";
     };
 
-    agda.url = "github:agda/agda";
+    agda.url = "github:agda/agda/v2.8.0";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -72,7 +72,7 @@
           nixpkgs.overlays = [ rust-overlay.overlays.default
                                agda.overlays.default ];
           environment.systemPackages = [ pkgs.rust-bin.stable.latest.default
-                                         pkgs.agda ];
+                                         agda.packages.aarch64-darwin.default ];
         })
 
         home-manager.darwinModules.home-manager {
