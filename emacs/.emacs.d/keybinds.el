@@ -5,6 +5,18 @@
   :config
   (setq which-key-idle-delay 0.3))
 
+(defun my-universal-argument-with-leader ()
+  "Universal argument that temporarily allows leader key chaining."
+  (interactive)
+  (let ((general-override-mode nil))  ; Temporarily disable general override
+    (universal-argument)
+    (set-transient-map
+     (let ((map (make-sparse-keymap)))
+       (define-key map (kbd "SPC u") 'universal-argument-more)
+       map)
+     t)))
+
+
 (use-package general
   :config
   (general-evil-setup t)
@@ -18,7 +30,7 @@
     :keymaps 'override ;; https://github.com/noctuid/general.el/issues/99#issuecomment-360914335
 
     ;; map universal argument to SPC-u
-    "u" '(universal-argument :which-key "Universal argument")
+    "u" '(my-universal-argument-with-leader :which-key "Universal argument")
     ";" '(eval-region :which-key "eval-region")
     "SPC" '(projectile-find-file :which-key "Projectile find file")
     "C-SPC" '(projectile-find-file-other-frame :which-key "Projectile find file (new frame)")
