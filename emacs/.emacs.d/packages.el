@@ -53,6 +53,8 @@
   (evil-define-key 'normal forester-mode-map
     "gd" 'forester-goto))
 
+(add-hook 'forester-mode-hook #'setup-forester-evil-keybindings)
+
 (add-to-list 'load-path lean4-mode-path)
 
 ;; Require the package
@@ -73,3 +75,6 @@
     :init (setq markdown-command "multimarkdown"))
     )
 )
+
+(use-package tsx-mode
+  :ensure t)

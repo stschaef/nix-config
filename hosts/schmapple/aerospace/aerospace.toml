@@ -180,18 +180,18 @@ alt-shift-l = ['join-with right', 'mode main']
 # shift-down = ['volume set 0', 'mode main']
 #
 [workspace-to-monitor-force-assignment]
-b = ['^built-in retina display$']
-c = ["dell", "QHD", "LG", '^built-in retina display$']
-m = '^built-in retina display$'
-v = '^built-in retina display$'
-s = '^built-in retina display$'
-p = ["dell", '^built-in retina display$']
-1 = ["LG", "QHD", '^built-in retina display$']
-2 = ["dell", '^built-in retina display$']
-3 = ["LG", "QHD", '^built-in retina display$']
-4 = ["dell", '^built-in retina display$']
-5 = ["LG", "QHD", '^built-in retina display$']
-6 = ["dell", '^built-in retina display$']
+b = ['^built-in retina display$', "DELL P2723QE"]
+c = ["DELL U2718Q", "QHD", "LG", '^built-in retina display$']
+m = ['^built-in retina display$', "DELL P2723QE"]
+v = ['^built-in retina display$', "DELL P2723QE"]
+s = ['^built-in retina display$', "DELL P2723QE"]
+p = ["DELL U2718Q", '^built-in retina display$']
+1 = ["DELL P2723QE", "LG", "QHD", '^built-in retina display$']
+2 = ["DELL U2718Q", '^built-in retina display$']
+3 = ["DELL P2723QE" , "LG", "QHD", '^built-in retina display$']
+4 = ["DELL U2718Q", '^built-in retina display$']
+5 = ["DELL P2723QE" , "LG", "QHD", '^built-in retina display$']
+6 = ["DELL U2718Q", '^built-in retina display$']
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'

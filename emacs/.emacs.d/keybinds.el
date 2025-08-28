@@ -109,6 +109,7 @@
     ;; forester
     "n" '(:ignore t :which-key "Forester")
     "nt" '(forester-new-and-goto :which-key "new tree")
+    "nd" '(forester-goto :which-key "goto tree")
     "nc" '(forester-new-and-transclude-and-goto :which-key "transclude new tree")
     )
 

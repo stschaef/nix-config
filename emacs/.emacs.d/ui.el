@@ -36,8 +36,8 @@
 )
 
 (set-face-attribute 'default nil
-		    :family "JetBrainsMono Nerd Font"
-		    :height 120
+		    :family "JuliaMono"
+		    :height 140
 		    :weight 'normal
 		    :width 'normal)
 

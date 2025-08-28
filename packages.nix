@@ -59,5 +59,7 @@
     ispell
 
     elan
+
+    nodejs
   ];
 }
