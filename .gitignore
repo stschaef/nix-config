@@ -3,3 +3,8 @@
 /.DS_Store
 /emacs/.DS_Store
 /hosts/.DS_Store
+# Emacs auto-save files
+\#*\#
+
+# Emacs lock files
+.\#*
