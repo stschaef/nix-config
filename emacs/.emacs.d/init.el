@@ -31,10 +31,10 @@
   (when (and (not (string-match-p "init\\.el$" file))
              (not (string-match-p "early-init\\.el$" file))
              (not (string-match-p "elpa" file))
-	     (not (or (and (string-equal system-type 'gnu/linux)
-			   (string-match-p "email\\.el$" file))))
-	     (not (or (and (string-equal system-type 'gnu/linux)
-			   (string-match-p "tex\\.el$" file))))
+             (not (and (eq system-type 'gnu/linux)
+                       (string-match-p "email\\.el$" file)))
+             (not (and (eq system-type 'gnu/linux)
+                       (string-match-p "tex\\.el$" file)))
              (not (string-match-p "custom\\.el$" file)))
     (message "  Loading %s..." (file-name-nondirectory file))
     (condition-case err
@@ -53,18 +53,16 @@
 ;;; ============================================================
 
 (run-with-idle-timer
- 2  ; Wait 2 seconds after Emacs becomes idle
+ 2
  nil
  (lambda ()
    (message "[Background] Starting package operations...")
    (condition-case err
        (progn
-         ;; Refresh package contents
          (message "[Background] Refreshing package contents...")
          (package-refresh-contents)
          (message "[Background] Package refresh complete")
 
-         ;; Install use-package if it wasn't available at startup
          (unless (package-installed-p 'use-package)
            (message "[Background] Installing use-package...")
            (package-install 'use-package)
@@ -72,7 +70,6 @@
            (setq use-package-always-ensure t)
            (message "[Background] use-package installed"))
 
-         ;; Install all selected packages
          (message "[Background] Installing selected packages...")
          (package-install-selected-packages 'no-confirm)
          (message "[Background] All packages installed")

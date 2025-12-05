@@ -10,9 +10,8 @@
 (defun nix-rebuild ()
   "Run system rebuild command based on the operating system."
   (interactive)
-  (let* ((rebuild-cmd (cond
-                       ((eq system-type 'darwin) "darwin-rebuild switch")
-                       ((eq system-type 'gnu/linux) "nixos-rebuild switch")
-                       (t (error "Unsupported system type"))))
-         (default-directory "/sudo::"))
+  (let ((rebuild-cmd (cond
+                      ((eq system-type 'darwin) "sudo darwin-rebuild switch")
+                      ((eq system-type 'gnu/linux) "sudo nixos-rebuild switch")
+                      (t (error "Unsupported system type")))))
     (async-shell-command rebuild-cmd)))
