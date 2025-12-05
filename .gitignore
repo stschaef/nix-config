@@ -1,2 +1,5 @@
 *.~undo-tree~
 /.projectile
+/.DS_Store
+/emacs/.DS_Store
+/hosts/.DS_Store

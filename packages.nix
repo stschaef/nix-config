@@ -45,10 +45,11 @@
 
     emacs30
 
-    ghc
     cabal-install
-    # haskellPackages.Agda
-    haskellPackages.fix-whitespace
+    (pkgs.haskellPackages.ghcWithPackages (hpkgs: [
+       hpkgs.tidal
+       hpkgs.fix-whitespace
+     ]))
 
     coq
 
@@ -61,5 +62,7 @@
     elan
 
     nodejs
+
+    uv
   ];
 }

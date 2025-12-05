@@ -15,9 +15,6 @@
 (add-to-list 'package-selected-packages 'lsp-mode)
 (add-to-list 'package-selected-packages 'magit-section)
 
-(package-refresh-contents)
-(package-install-selected-packages 'no-confirm)
-
 (use-package nix-mode
   :mode "\\.nix\\'")
 
@@ -76,5 +73,9 @@
     )
 )
 
-(use-package tsx-mode
-  :ensure t)
+(use-package tidal
+   :ensure t)
+(setq tidal-boot-script-path "/nix/store/rdylr02yqhf9530xh7w2cn9wj9a7nm6m-tidal-1.9.5-data/share/ghc-9.8.4/aarch64-osx-ghc-9.8.4/tidal-1.9.5/BootTidal.hs")
+
+(use-package haskell-mode
+    :ensure t)

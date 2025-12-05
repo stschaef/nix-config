@@ -16,7 +16,6 @@
        map)
      t)))
 
-
 (use-package general
   :config
   (general-evil-setup t)
@@ -44,6 +43,12 @@
     "?" '(counsel-rg :which-key "counsel-rg")
     "v" '(vterm-toggle :which-key "vterm-toggle")
     "m" '(mu4e :which-key "mu4e")
+
+    ;; Config
+    "c" '(:ignore t :which-key "Configuration")
+    "c k" '((lambda () (interactive) (find-file nix-config-emacs-keybinds))
+	      :which-key "Edit keybinds")
+    "c r" '(nix-rebuild :which-key "Nix rebuild")
 
     ;; Search bindings
     "s" '(:ignore t :which-key "search")

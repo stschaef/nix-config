@@ -75,6 +75,7 @@
   :config
   (counsel-projectile-mode 1))
 
+(setq counsel-rg-base-command "rg --hidden --vimgrep %s")
 
 (use-package company
   :ensure t
