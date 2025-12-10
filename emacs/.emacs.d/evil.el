@@ -34,8 +34,7 @@
   :ensure t
   :after (evil magit)
   :config
-  (evil-collection-init 'magit)
-  (evil-collection-init 'mu4e)
+  (evil-collection-init '(magit forge mu4e))
   )
 
 (use-package evil-commentary

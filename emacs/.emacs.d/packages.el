@@ -7,9 +7,11 @@
   (define-key magit-revision-mode-map (kbd "<escape>") 'magit-mode-bury-buffer)
 )
 
-;; TODO forge for PRs
-;; (use-package forge
-;;   :after magit)
+(require 'auth-source)
+(use-package forge
+  :after (magit evil-magit))
+
+(setq auth-sources '("~/.authinfo.gpg"))
 
 (add-to-list 'package-selected-packages 'dash)
 (add-to-list 'package-selected-packages 'lsp-mode)

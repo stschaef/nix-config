@@ -32,10 +32,11 @@
     "u" '(my-universal-argument-with-leader :which-key "Universal argument")
     ";" '(eval-region :which-key "eval-region")
     "SPC" '(projectile-find-file :which-key "Projectile find file")
+    "S-SPC" '(projectile-find-file-other-window :which-key "Projectile find file (new window)")
     "C-SPC" '(projectile-find-file-other-frame :which-key "Projectile find file (new frame)")
-    "S-SPC" '(projectile-find-file-other-frame :which-key "Projectile find file (new frame)")
     "." '(find-file :which-key "Find file")
-    ">" '(find-file-other-frame :which-key "Find file (new frame)")
+    ">" '(find-file-other-window :which-key "Find file (new window)")
+    "C-." '(find-file-other-frame :which-key "Find file (new frame)")
     "," '(consult-buffer :which-key "consult-buffer")
     ":" '(execute-extended-command :which-key "M-x")
     "x" '(scratch-buffer :which-key "Open scratch buffer")
@@ -46,8 +47,12 @@
 
     ;; Config
     "c" '(:ignore t :which-key "Configuration")
+    "c i" '((lambda () (interactive) (find-file nix-config-emacs-init))
+	      :which-key "Edit init")
     "c k" '((lambda () (interactive) (find-file nix-config-emacs-keybinds))
 	      :which-key "Edit keybinds")
+    "c p" '((lambda () (interactive) (find-file nix-config-emacs-packages))
+	      :which-key "Edit packages")
     "c r" '(nix-rebuild :which-key "Nix rebuild")
 
     ;; Search bindings

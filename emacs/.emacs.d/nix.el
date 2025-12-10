@@ -7,6 +7,12 @@
 (defvar nix-config-emacs-keybinds (expand-file-name "keybinds.el" nix-config-emacs-d-dir)
   "Path to keybinds.el file.")
 
+(defvar nix-config-emacs-packages (expand-file-name "packages.el" nix-config-emacs-d-dir)
+  "Path to packages.el file.")
+
+(defvar nix-config-emacs-init (expand-file-name "init.el" nix-config-emacs-d-dir)
+  "Path to init.el file.")
+
 (defun nix-rebuild ()
   "Run system rebuild command based on the operating system."
   (interactive)
