@@ -71,8 +71,15 @@
         ({ pkgs, ... }: {
           nixpkgs.overlays = [ rust-overlay.overlays.default
                                agda.overlays.default ];
-          environment.systemPackages = [ pkgs.rust-bin.stable.latest.default
-                                         agda.packages.aarch64-darwin.default ];
+
+          environment.systemPackages = [
+            pkgs.rust-bin.stable.latest.default
+            (pkgs.haskell.lib.compose.overrideCabal (drv: {
+              enableLibraryProfiling = true;
+              enableExecutableProfiling = true;
+            }) agda.packages.aarch64-darwin.debug)
+          ];
+
         })
 
         home-manager.darwinModules.home-manager {
