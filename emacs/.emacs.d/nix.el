@@ -4,6 +4,12 @@
 (defvar nix-config-emacs-d-dir (expand-file-name "emacs/.emacs.d" nix-config-root)
   "Emacs configuration directory within nix-config.")
 
+(defvar nix-config-flake (expand-file-name "flake.nix" nix-config-root)
+  "Path to flake.nix file.")
+
+(defvar nix-config-packages (expand-file-name "packages.nix" nix-config-root)
+  "Path to packages.nix file.")
+
 (defvar nix-config-emacs-keybinds (expand-file-name "keybinds.el" nix-config-emacs-d-dir)
   "Path to keybinds.el file.")
 

@@ -16,7 +16,7 @@ with pkgs; [
 
   ethtool
 
-  emacs
+  emacs30
 
   protontricks
   winetricks

@@ -47,13 +47,19 @@
 
     ;; Config
     "c" '(:ignore t :which-key "Configuration")
-    "c i" '((lambda () (interactive) (find-file nix-config-emacs-init))
+    "cn" '(:ignore t :which-key "Configure Nix")
+    "ce" '(:ignore t :which-key "Configure Emacs")
+    "cei" '((lambda () (interactive) (find-file nix-config-emacs-init))
 	      :which-key "Edit init")
-    "c k" '((lambda () (interactive) (find-file nix-config-emacs-keybinds))
+    "cek" '((lambda () (interactive) (find-file nix-config-emacs-keybinds))
 	      :which-key "Edit keybinds")
-    "c p" '((lambda () (interactive) (find-file nix-config-emacs-packages))
+    "cep" '((lambda () (interactive) (find-file nix-config-emacs-packages))
 	      :which-key "Edit packages")
-    "c r" '(nix-rebuild :which-key "Nix rebuild")
+    "cnr" '(nix-rebuild :which-key "Nix rebuild")
+    "cnf" '((lambda () (interactive) (find-file nix-config-flake))
+	      :which-key "Edit Nix flake")
+    "cnp" '((lambda () (interactive) (find-file nix-config-packages))
+	      :which-key "Edit Nix packages")
 
     ;; Search bindings
     "s" '(:ignore t :which-key "search")

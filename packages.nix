@@ -43,8 +43,6 @@
     vim
     neovim
 
-    emacs30
-
     cabal-install
     (pkgs.haskellPackages.ghcWithPackages (hpkgs: [
        hpkgs.tidal
