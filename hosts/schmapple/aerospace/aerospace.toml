@@ -149,7 +149,7 @@ alt-shift-6 = 'move-node-to-workspace 6'
 
 alt-a = 'exec-and-forget open -a /Applications/Arc.app'
 alt-z = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
-alt-e = 'exec-and-forget open -a /run/current-system/sw/bin/emacs'
+alt-e = 'exec-and-forget open -a /Applications/Nix\ Apps/Emacs.app'
 alt-t = 'exec-and-forget open -a /Applications/Ghostty.app'
 # alt-t = 'exec-and-forget open -a /Applications/iTerm.app'
 
