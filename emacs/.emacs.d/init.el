@@ -79,4 +79,14 @@
       (message "[Background] Package operation failed: %s"
                (error-message-string err))))))
 
+;; Set custom emacs directory
+(setq user-emacs-directory "~/nix-config/emacs/.emacs.d/")
+
+;; Set custom-file to write to your nix-config directory
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+;; Load custom-file if it exists
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;;; init.el ends here

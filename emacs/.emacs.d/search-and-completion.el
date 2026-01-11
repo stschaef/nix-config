@@ -1,4 +1,4 @@
-(use-package consult :ensure t)
+(use-package consult)
 
 (use-package ivy
   :config

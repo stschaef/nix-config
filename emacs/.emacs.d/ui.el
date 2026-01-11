@@ -1,5 +1,5 @@
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+(menu-bar-mode 1)
+(scroll-bar-mode 1)
 (tool-bar-mode -1)
 (line-number-mode 1)
 (column-number-mode 1)
@@ -41,12 +41,23 @@
 		    :weight 'normal
 		    :width 'normal)
 
-(use-package hl-todo :ensure t :init (global-hl-todo-mode 1))
+(use-package hl-todo :init (global-hl-todo-mode 1))
 (use-package unicode-fonts :ensure t)
 
 (use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+  :init
+  (doom-modeline-mode 1)
+  :config
+  ;; Define your custom modeline layout
+  (doom-modeline-def-modeline 'main
+    '(bar matches process vcs buffer-info remote-host buffer-position selection-info)
+    '(misc-info minor-modes input-method buffer-encoding major-mode check))
+
+  ;; Set it as the default
+  (defun my/setup-custom-modeline ()
+    (doom-modeline-set-modeline 'main 'default))
+
+  (add-hook 'doom-modeline-mode-hook #'my/setup-custom-modeline))
 
 (use-package catppuccin-theme)
 (load-theme 'catppuccin :no-confirm)
