@@ -3,6 +3,7 @@
 (tool-bar-mode -1)
 (line-number-mode 1)
 (column-number-mode 1)
+(ultra-scroll-mode 1)
 
 (global-auto-revert-mode 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -50,7 +51,7 @@
   :config
   ;; Define your custom modeline layout
   (doom-modeline-def-modeline 'main
-    '(bar matches process vcs buffer-info remote-host buffer-position selection-info)
+    '(bar matches process buffer-info vcs remote-host buffer-position selection-info)
     '(misc-info minor-modes input-method buffer-encoding major-mode check))
 
   ;; Set it as the default

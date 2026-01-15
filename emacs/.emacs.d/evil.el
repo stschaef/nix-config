@@ -8,6 +8,7 @@
    (setq evil-move-cursor-back nil)
  :config
    (evil-mode 1)
+   (evil-set-initial-state 'Custom-mode 'motion)
 )
 (use-package evil-surround
   :ensure
@@ -34,7 +35,7 @@
   :ensure t
   :after (evil magit)
   :config
-  (evil-collection-init '(magit forge mu4e ediff))
+  (evil-collection-init '(org magit forge mu4e ediff))
   )
 
 (use-package evil-commentary
