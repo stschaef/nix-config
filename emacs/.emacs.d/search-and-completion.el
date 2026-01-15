@@ -4,8 +4,18 @@
   :init
   (vertico-mode)
   :config
-  (setq vertico-cycle t)   ; Cycle from bottom to top
-  (setq vertico-count 20)) ; Show more candidates
+  (setq vertico-cycle t)
+  (setq vertico-count 20))
+
+;; Vertico Directory extension for smart path navigation
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;; Orderless: Powerful completion style
 (use-package orderless
@@ -116,7 +126,6 @@
 ;; Recent files
 (use-package recentf
   :config
-  (setq recentf-save-file (expand-file-name "recentf" my/data-directory))
   (setq recentf-max-saved-items 200)
   (recentf-mode 1))
 
@@ -125,11 +134,8 @@
   :ensure t
   :config
   (projectile-mode +1)
-  (setq projectile-completion-system 'default) ; Use Vertico
-  (setq projectile-cache-file
-        (expand-file-name "projectile.cache" my/data-directory))
-  (setq projectile-known-projects-file
-        (expand-file-name "projectile-bookmarks.eld" my/data-directory)))
+  (setq projectile-completion-system 'default)
+  )
 
 ;; Company
 (use-package company
@@ -144,7 +150,6 @@
 ;; ===== SAVEHIST WITH PERSISTENT DIRECTORY =====
 (use-package savehist
   :init
-  (setq savehist-file (expand-file-name "savehist" my/data-directory))
   (savehist-mode 1)
   :config
   (setq savehist-additional-variables
@@ -155,25 +160,7 @@
           regexp-search-ring
           search-ring)))
 
-;; ===== CUSTOM MINIBUFFER BEHAVIORS =====
-
-;; 1. Backspace deletes up to "/" in file paths
-(defun my/minibuffer-backward-delete-to-slash ()
-  "Delete backward in minibuffer up to and including the last slash."
+(defun my/consult-ripgrep-current-dir ()
+  "Run consult-ripgrep starting from the current directory."
   (interactive)
-  (if minibuffer-completing-file-name
-      (if (looking-back "/" (minibuffer-prompt-end))
-          (delete-char -1)
-        (delete-region (point)
-                       (save-excursion
-                         (skip-chars-backward "^/")
-                         (point))))
-    (delete-backward-char 1)))
-
-(define-key minibuffer-local-filename-completion-map
-            (kbd "DEL") 'my/minibuffer-backward-delete-to-slash)
-
-
-;; Add a custom binding for quick export
-(with-eval-after-load 'embark-consult
-  (define-key consult-mode-map (kbd "C-c C-e") 'embark-export))
+  (consult-ripgrep default-directory))

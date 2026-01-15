@@ -33,6 +33,10 @@
     "u" '(my-universal-argument-with-leader :which-key "Universal argument")
     ";" '(eval-region :which-key "eval-region")
 
+    "e" '(:ignore t :which-key "Eval")
+    "er" '(eval-region :which-key "eval-region")
+    "eb" '(eval-buffer :which-key "eval-buffer")
+
     ;; Files
     "SPC" '(projectile-find-file :which-key "Projectile find file")
     "S-SPC" '(projectile-find-file-other-window :which-key "Projectile find file (new window)")
@@ -47,7 +51,6 @@
     "x" '(scratch-buffer :which-key "Open scratch buffer")
     "d" '(dired-jump :which-key "dired-jump")
     "?" '(consult-ripgrep :which-key "Ripgrep search")
-    "v" '(vterm-toggle :which-key "vterm-toggle")
     "m" '(mu4e :which-key "mu4e")
 
     ;; Config
@@ -69,7 +72,7 @@
     ;; Search bindings
     "s" '(:ignore t :which-key "search")
     "s p" '(consult-ripgrep :which-key "search project")
-    "s d" '(consult-ripgrep :which-key "search directory")
+    "s d" '(my/consult-ripgrep-current-dir :which-key "search directory")
     "s s" '(consult-line :which-key "search buffer")
     "s l" '(consult-line :which-key "search lines")
     "s g" '(consult-grep :which-key "grep")
@@ -93,6 +96,7 @@
 
     ;; Buffer management
     "b" '(:ignore t :which-key "Buffer")
+    "b e" '(eval-buffer :which-key "Eval buffer")
     "b b" '(consult-buffer :which-key "Switch buffer")
     "b [" '(previous-buffer :which-key "Previous buffer")
     "b ]" '(next-buffer :which-key "Next buffer")
@@ -107,6 +111,7 @@
     "h" '(:ignore t :which-key "Help")
     "h f" '(describe-function :which-key "describe-function")
     "h k" '(describe-key :which-key "describe-key")
+    "h c" '(describe-char :which-key "describe-char")
     "h v" '(describe-variable :which-key "describe-variable")
     "h o" '(describe-symbol :which-key "describe-symbol")
     "h m" '(describe-mode :which-key "describe-mode")
