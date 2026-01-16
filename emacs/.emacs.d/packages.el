@@ -80,3 +80,20 @@
 
 (use-package haskell-mode
     :ensure t)
+
+;; Enable undo-tree mode globally
+(use-package undo-tree
+  :ensure t
+  :config
+  (global-undo-tree-mode)
+
+  ;; Enable automatic save/restore of undo history
+  (setq undo-tree-auto-save-history t)
+
+  ;; Save undo history to ~/.emacs.d/undo-tree-history/
+  (setq undo-tree-history-directory-alist
+        `(("." . ,(expand-file-name "undo-tree-history" user-emacs-directory))))
+
+  ;; Prevent undo-tree files from cluttering your filesystem
+  (setq undo-tree-visualizer-timestamps t)
+  (setq undo-tree-visualizer-diff t))

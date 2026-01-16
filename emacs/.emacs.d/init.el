@@ -14,12 +14,24 @@
 ;; Initialize package system (loads local package metadata only, no network)
 (package-initialize)
 
-;; Set custom emacs directory
-(setq user-emacs-directory "~/nix-config/emacs/.emacs.d/")
+;; Keep user-emacs-directory as ~/.emacs.d for transient files
+(setq user-emacs-directory (expand-file-name "~/.emacs.d/"))
 
-;; Set custom-file to write to your nix-config directory
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; Set custom-file to write to your nix-config directory ONLY
+(setq custom-file (expand-file-name "~/nix-config/emacs/.emacs.d/custom.el"))
 
+;; Explicitly set transient file locations to ~/.emacs.d
+(setq savehist-file (expand-file-name "history" user-emacs-directory))
+(setq projectile-known-projects-file
+      (expand-file-name "projectile-bookmarks.eld" user-emacs-directory))
+(setq recentf-save-file
+      (expand-file-name "recentf" user-emacs-directory))
+(setq transient-history-file
+      (expand-file-name "transient/history.el" user-emacs-directory))
+(setq transient-levels-file
+      (expand-file-name "transient/levels.el" user-emacs-directory))
+(setq transient-values-file
+      (expand-file-name "transient/values.el" user-emacs-directory))
 ;;; ============================================================
 ;;; PHASE 2: Install Packages (SYNCHRONOUS)
 ;;; ============================================================

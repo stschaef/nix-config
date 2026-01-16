@@ -63,3 +63,16 @@
     (setq-local mode-line-format my/org-present-modeline-format)
 
     (read-only-mode -1)))
+
+(use-package org-roam
+  :ensure t
+  :init
+  ;; Acknowledge that you're using Org Roam v2
+  (setq org-roam-v2-ack t)
+  :custom
+  ;; Set the directory where your notes will be stored
+  (org-roam-directory "~/org-roam")
+  (org-roam-completion-everywhere t)
+  :config
+  ;; Initialize the database and setup Org Roam
+  (org-roam-setup))
