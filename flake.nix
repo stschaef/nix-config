@@ -138,5 +138,26 @@
 	      }
       ];
    };
+
+   nixosConfigurations.cheeseplase = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+
+      modules = [
+        ./configuration.nix
+        ./hosts/cheeseplease/configuration.nix
+	      home-manager.nixosModules.home-manager {
+	        home-manager.useGlobalPkgs = true;
+	        home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; system = "x86_64-linux"; };
+	        home-manager.users.steven = {
+	          imports = [
+	            ./home.nix
+	            ./hosts/cheeseplease/home.nix
+	          ];
+          };
+	      }
+      ];
+   };
   };
 }
