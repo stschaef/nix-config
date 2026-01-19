@@ -82,8 +82,6 @@
 
   console.useXkbConfig = true;
 
-  console.useXkbConfig = true;
-
   # AMD GPU support (for Sapphire card)
   hardware.graphics = {
     enable = true;
