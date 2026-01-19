@@ -71,8 +71,14 @@
   (setq org-roam-v2-ack t)
   :custom
   ;; Set the directory where your notes will be stored
-  (org-roam-directory "~/org-roam")
+  (org-roam-directory "~/org")
   (org-roam-completion-everywhere t)
   :config
   ;; Initialize the database and setup Org Roam
   (org-roam-setup))
+
+(setq org-agenda-files (list org-roam-directory))
+(setq org-directory "~/org")
+
+(evil-set-initial-state 'org-agenda-mode 'normal)
+(setq org-default-notes-file (concat org-directory "/inbox.org"))

@@ -63,11 +63,11 @@
             :which-key "Edit keybinds")
     "cep" '((lambda () (interactive) (find-file nix-config-emacs-packages))
             :which-key "Edit packages")
-    "cnr" '(nix-rebuild :which-key "Nix rebuild")
     "cnf" '((lambda () (interactive) (find-file nix-config-flake))
             :which-key "Edit Nix flake")
     "cnp" '((lambda () (interactive) (find-file nix-config-packages))
             :which-key "Edit Nix packages")
+    "cnr" '(nix-rebuild :which-key "Nix rebuild")
 
     ;; Search bindings
     "s" '(:ignore t :which-key "search")
@@ -123,6 +123,7 @@
     "t" '(:ignore t :which-key "Toggles")
     "t s" '(flyspell-mode :which-key "flyspell-mode")
     "t v" '(visual-line-mode :which-key "visual-line-mode")
+    "t f" '(auto-fill-mode :which-key "visual-line-mode")
 
     ;; Git
     "g" '(:ignore t :which-key "Magit")
@@ -140,14 +141,17 @@
 
     ;; Org/Notes
     "n" '(:ignore t :which-key "Notes")
-    "n l" '(org-roam-buffer-toggle :which-key "Org Roam toggle buffer")
-    "n f" '(org-roam-node-find :which-key "Org Roam find")
-    "n g" '(org-roam-graph :which-key "Org Roam graph")
-    "n i" '(org-roam-node-insert :which-key "Org Roam insert node")
-    "n c" '(org-roam-capture :which-key "Org Roam capture")
-    "n j" '(org-roam-dailies-capture-today :which-key "Org Roam dailies capture")
-    "n t" '(org-todo-list :which-key "Org todo list")
-    "n a" '(org-agenda :which-key "Org agenda"))
+    "n l" '(org-roam-buffer-toggle :which-key "Toggle Roam buffer")
+    "n f" '(org-roam-node-find :which-key "find node")
+    "n g" '(org-roam-graph :which-key "graph")
+    "n i" '(org-roam-node-insert :which-key "insert node")
+    "n c" '(org-roam-capture :which-key "capture")
+    "n j" '(org-roam-dailies-capture-today :which-key "dailies capture")
+    "n t" '(org-todo-list :which-key "todo list")
+    "n a" '(org-agenda :which-key "agenda")
+    "n h" '(org-roam-tag-add :which-key "add tag")
+    "n o" '(org-agenda-open-link :which-key "open link at point")
+    )
 
   ;; Magit
   (general-define-key

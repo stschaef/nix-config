@@ -62,5 +62,6 @@
     nodejs
 
     uv
+    graphviz
   ];
 }
