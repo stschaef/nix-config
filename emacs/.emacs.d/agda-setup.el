@@ -24,5 +24,3 @@
 
 (with-eval-after-load 'agda2-mode
   (add-hook 'agda2-mode-hook 'my/agda-fix-process))
-
-(setq agda2-program-args '("+RTS" "-M8g" "-A128m" "-RTS"))
