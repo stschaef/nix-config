@@ -52,7 +52,7 @@
 
   ;; Define your custom modeline layout
   (doom-modeline-def-modeline 'main
-    '(modals matches process bar buffer-info vcs remote-host buffer-position selection-info)
+    '(modals matches process buffer-info vcs remote-host buffer-position selection-info)
     '(misc-info minor-modes input-method buffer-encoding major-mode check))
 
   ;; Set it as the default
@@ -61,46 +61,38 @@
 
   (add-hook 'doom-modeline-mode-hook #'my/setup-custom-modeline))
 
-;; (use-package catppuccin-theme)
-;; (load-theme 'catppuccin :no-confirm)
-;; (setq catppuccin-flavor 'frappe) ;; 'latte, 'frappe, 'macchiato, or 'mocha
-;; (catppuccin-reload)
-
-(use-package doom-themes
+(use-package ef-themes
   :ensure t
+  :init
+  (ef-themes-take-over-modus-themes-mode 1)
+  :bind
+  (("<f5>" . modus-themes-rotate)
+   ("C-<f5>" . modus-themes-select)
+   ("M-<f5>" . modus-themes-load-random))
   :config
-  (load-theme 'modus-vivendi t))
+  ;; All customisations here.
+  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-italic-constructs t)
+
+  (setq modus-themes-to-rotate '(ef-cherie ef-summer ef-reverie ef-rosa ef-trio-dark ef-winter ef-day ef-kassio ef-elea-light))
+
+  ;; Finally, load your theme of choice (or a random one with
+  ;; `modus-themes-load-random', `modus-themes-load-random-dark',
+  ;; `modus-themes-load-random-light').
+  (modus-themes-load-theme 'ef-rosa))
+
+;;light
+;; ef-summer, ef-reverie
+;; dark
+;; ef-rosa, ef-trio-dark, ef-cherie, ef-winter
+
+;; (use-package doom-themes
+;;   :ensure t;;   :config
+;;   (load-theme 'modus-vivendi t))
 ;; challenger deep
 ;; Isovkem
 ;; feather dark
 ;; tokyo night
-
-;; (defun my/catppuccin-get-color (color)
-;;   "Get a color from the current Catppuccin theme."
-;;   (let ((colors (pcase catppuccin-flavor
-;;                   ('latte catppuccin-latte-colors)
-;;                   ('frappe catppuccin-frappe-colors)
-;;                   ('macchiato catppuccin-macchiato-colors)
-;;                   ('mocha catppuccin-mocha-colors))))
-;;     (alist-get color colors)))
-
-;; (custom-set-faces
-;;  `(agda2-highlight-datatype-face ((t (:foreground ,(my/catppuccin-get-color 'sapphire)))))
-;;  `(agda2-highlight-inductive-constructor-face ((t (:foreground ,(my/catppuccin-get-color 'sapphire)))))
-;;  `(agda2-highlight-function-face ((t (:foreground ,(my/catppuccin-get-color 'rosewater)))))
-;;  `(agda2-highlight-keyword-face ((t (:foreground ,(my/catppuccin-get-color 'red)))))
-;;  `(agda2-highlight-module-face ((t (:foreground ,(my/catppuccin-get-color 'blue)))))
-;;  `(agda2-highlight-symbol-face ((t (:foreground ,(my/catppuccin-get-color 'lavender)))))
-;;  `(agda2-highlight-postulate-face ((t (:foreground ,(my/catppuccin-get-color 'blue)))))
-;;  `(agda2-highlight-bound-variable-face ((t (:foreground ,(my/catppuccin-get-color 'pink)))))
-;;  `(agda2-highlight-generalizable-variable-face ((t (:foreground ,(my/catppuccin-get-color 'maroon)))))
-;;  `(agda2-highlight-primitive-face ((t (:foreground ,(my/catppuccin-get-color 'peach)))))
-;;  `(agda2-highlight-number-face ((t (:foreground ,(my/catppuccin-get-color 'peach)))))
-;;  `(agda2-highlight-string-face ((t (:foreground ,(my/catppuccin-get-color 'green)))))
-;;  `(agda2-highlight-operator-face ((t (:foreground ,(my/catppuccin-get-color 'teal)))))
-;;  `(agda2-highlight-error-face ((t (:foreground ,(my/catppuccin-get-color 'green)))))
-;;  `(agda2-highlight-typechecks-face ((t (:foreground ,(my/catppuccin-get-color 'green)))))
-;; )
 
 (use-package org-bullets)
 (require 'org-bullets)
