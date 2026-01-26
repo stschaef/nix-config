@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "web-search": {
+      "description": "Lightweight web search agent for quick research",
+      "mode": "subagent",
+      "temperature": 0.3,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "read": false,
+        "glob": false,
+        "grep": false,
+        "webfetch": true,
+        "task": false,
+        "todowrite": false,
+        "todoread": false
+      },
+      "permission": {
+        "webfetch": "allow"
+      }
+    }
+  }
+}

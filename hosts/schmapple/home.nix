@@ -13,6 +13,10 @@
       source = ./aerospace;
       recursive = true;
     };
+    ".config/opencode" = {
+      source = ./opencode;
+      recursive = true;
+    };
     ".agda/libraries".text = ''
       /Users/stevenschaefer/cubical/cubical.agda-lib
       /Users/stevenschaefer/agda-stdlib/standard-library.agda-lib
