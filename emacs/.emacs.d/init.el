@@ -78,6 +78,7 @@
     ("search-and-completion.el" . 10)
     ("tex.el" . 99)
     ("ui.el" . 2)
+    ("agents.el" . 11)
     ("utils.el" . 10))
   "Alist of file patterns and their load priorities.")
 

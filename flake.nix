@@ -44,6 +44,8 @@
 
     agda.url = "github:agda/agda/v2.8.0";
 
+    opencode.url = "github:anomalyco/opencode";
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,6 +58,7 @@
               homebrew-cask, homebrew-bundle,
               zen-browser,
               forester,
+              opencode,
               agda,
               rust-overlay,
               ... }@inputs:
@@ -78,6 +81,10 @@
               enableLibraryProfiling = true;
               enableExecutableProfiling = true;
             }) agda.packages.aarch64-darwin.debug)
+
+
+            opencode.packages.aarch64-darwin.default
+
           ];
 
         })
