@@ -44,15 +44,6 @@
             (setq inhibit-message nil)
             (redisplay)))
 
-;; Don't resize frame at startup (prevents flicker)
-(setq frame-inhibit-implied-resize t)
-
-;; Disable startup screen (we use dashboard)
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message user-login-name)
-(setq initial-scratch-message nil)
-
 ;;; ============================================================
 ;;; NETWORK & GPG - Fix hanging issues
 ;;; ============================================================

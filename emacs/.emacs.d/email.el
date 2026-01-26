@@ -1,129 +1,127 @@
-;; (cond
-;;  ;; macOS specific configuration
-;;  ((eq system-type 'darwin)
-;;   (setq mu4e-load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e/")
-;;  )
+;;; email.el --- Email configuration with mu4e -*- lexical-binding: t; -*-
 
-;;  ;; Linux specific configuration
-;;  ((eq system-type 'gnu/linux)
-;;   (message "Need to implement mu4e on linux")
-;;  ))
+;;; ============================================================
+;;; mu4e Configuration
+;;; ============================================================
 
-;; (use-package mu4e
-;;   :ensure nil
-;;   :load-path mu4e-load-path
-;; )
+;; Set mu4e load path based on OS
+(defvar mu4e-load-path
+  (cond
+   ((eq system-type 'darwin) "/opt/homebrew/share/emacs/site-lisp/mu/mu4e/")
+   ((eq system-type 'gnu/linux) "/usr/share/emacs/site-lisp/mu4e/")
+   (t nil))
+  "Path to mu4e installation.")
 
-;; (require 'smtpmail)
+(when (and mu4e-load-path (file-exists-p mu4e-load-path))
+  (add-to-list 'load-path mu4e-load-path))
 
-;; (setq mu4e-mu-binary (executable-find "mu"))
+(use-package mu4e
+  :ensure nil
+  :commands (mu4e mu4e-headers-search mu4e-compose-new)
+  :config
+  (require 'smtpmail)
 
-;; (setq mu4e-maildir "~/Mail")
+  ;; Basic settings
+  (setq mu4e-mu-binary (executable-find "mu"))
+  (setq mu4e-maildir "~/Mail")
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-update-interval 300)
+  (setq mu4e-attachment-dir "~/Desktop/Attachments")
+  (setq mu4e-change-filenames-when-moving t)
 
-;; (setq mu4e-get-mail-command "mbsync -a")
-;; (setq mu4e-update-interval 300)
-;; (setq mu4e-attachment-dir "~/Desktop/Attachments")
-;; (setq mu4e-change-filenames-when-moving t)
+  ;; Maildir shortcuts
+  (setq mu4e-maildir-shortcuts
+        '(("/Gmail/Inbox" . ?i)
+          ("/Gmail/[Gmail]/Sent Mail" . ?s)
+          ("/Gmail/[Gmail]/Starred" . ?t)
+          ("/Umich/Inbox" . ?I)
+          ("/Umich/[Gmail]/Sent Mail" . ?S)
+          ("/Umich/[Gmail]/Starred" . ?T)))
 
-;; (setq   mu4e-maildir-shortcuts
-;;         '(("/Gmail/Inbox" . ?i)
-;;           ("/Gmail/[Gmail]/Sent Mail" . ?s)
-;;           ("/Gmail/[Gmail]/Starred" . ?t)
-;;           ("/Umich/Inbox" . ?I)
-;;           ("/Umich/[Gmail]/Sent Mail" . ?S)
-;;           ("/Umich/[Gmail]/Starred" . ?T)
-;; 	  ))
-;; (setq mu4e-contexts
-;;       `(,(make-mu4e-context
-;;           :name "gmail"
-;;           :enter-func
-;;           (lambda () (mu4e-message "Entering schaefer.steven.ss@gmail.com context"))
-;;           :leave-func
-;;           (lambda () (mu4e-message "Leaving schaefer.steven.ss@gmail.com context"))
-;;           :match-func
-;;           (lambda (msg) (when msg (mu4e-message-contact-field-matches msg :to "schaefer.steven.ss@gmail.com")))
-;;           :vars '((user-mail-address . "schaefer.steven.ss@gmail.com")
-;;                   (user-full-name . "Steven Schaefer")
-;;                   (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
-;;                   (mu4e-refile-folder . "/Gmail/Archive")
-;;                   (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
-;;                   (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")))
-;;        ,(make-mu4e-context
-;;           :name "umich"
-;;           :enter-func
-;;           (lambda () (mu4e-message "Entering stschaef@umich.edu context"))
-;;           :leave-func
-;;           (lambda () (mu4e-message "Leaving stschaef@umich.edu context"))
-;;           :match-func
-;;           (lambda (msg) (when msg (mu4e-message-contact-field-matches msg :to "stschaef@umich.edu")))
-;;           :vars '((user-mail-address . "stschaef@umich.edu")
-;;                   (user-full-name . "Steven Schaefer")
-;;                   (mu4e-drafts-folder . "/Umich/[Gmail]/Drafts")
-;;                   (mu4e-refile-folder . "/Umich/Archive")
-;;                   (mu4e-sent-folder . "/Umich/[Gmail]/Sent Mail")
-;;                   (mu4e-trash-folder . "/Umich/[Gmail]/Trash")))
-;; 	))
+  ;; Email contexts for multiple accounts
+  (setq mu4e-contexts
+        `(,(make-mu4e-context
+            :name "gmail"
+            :enter-func
+            (lambda () (mu4e-message "Entering schaefer.steven.ss@gmail.com context"))
+            :leave-func
+            (lambda () (mu4e-message "Leaving schaefer.steven.ss@gmail.com context"))
+            :match-func
+            (lambda (msg)
+              (when msg
+                (mu4e-message-contact-field-matches msg :to "schaefer.steven.ss@gmail.com")))
+            :vars '((user-mail-address . "schaefer.steven.ss@gmail.com")
+                    (user-full-name . "Steven Schaefer")
+                    (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
+                    (mu4e-refile-folder . "/Gmail/Archive")
+                    (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
+                    (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")))
+          ,(make-mu4e-context
+            :name "umich"
+            :enter-func
+            (lambda () (mu4e-message "Entering stschaef@umich.edu context"))
+            :leave-func
+            (lambda () (mu4e-message "Leaving stschaef@umich.edu context"))
+            :match-func
+            (lambda (msg)
+              (when msg
+                (mu4e-message-contact-field-matches msg :to "stschaef@umich.edu")))
+            :vars '((user-mail-address . "stschaef@umich.edu")
+                    (user-full-name . "Steven Schaefer")
+                    (mu4e-drafts-folder . "/Umich/[Gmail]/Drafts")
+                    (mu4e-refile-folder . "/Umich/Archive")
+                    (mu4e-sent-folder . "/Umich/[Gmail]/Sent Mail")
+                    (mu4e-trash-folder . "/Umich/[Gmail]/Trash")))))
 
+  ;; Context policy
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'ask)
 
-;; (setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
+  ;; Message settings
+  (setq message-kill-buffer-on-exit t)
 
-;; (setq mu4e-compose-context-policy 'ask) ;; ask for context if no context matches;
+  ;; SMTP configuration using msmtp
+  (setq message-send-mail-function 'message-send-mail-with-sendmail
+        sendmail-program (executable-find "msmtp")
+        mail-specify-envelope-from t
+        message-sendmail-envelope-from 'header
+        mail-envelope-from 'header)
 
-;; (setq message-kill-buffer-on-exit t)
+  ;; Default to gmail account for sending
+  (setq message-sendmail-extra-arguments '("-a" "gmail"))
 
-;; ;; With these lines
-;; (setq message-send-mail-function 'message-send-mail-with-sendmail
-;;       sendmail-program (executable-find "msmtp")
-;;       mail-specify-envelope-from t
-;;       message-sendmail-envelope-from 'header
-;;       mail-envelope-from 'header)
+  ;; Auto add Cc and Bcc headers
+  (add-hook 'mu4e-compose-mode-hook
+            (lambda ()
+              (save-excursion (message-add-header "Cc:\n"))
+              (save-excursion (message-add-header "Bcc:\n"))))
 
-;; ;; Add this line to pass the account explicitly
-;; (setq message-sendmail-extra-arguments '("-a" "gmail"))
+  ;; Address completion
+  (add-hook 'mu4e-compose-mode-hook 'company-mode)
 
-;; (add-hook 'mu4e-compose-mode-hook
+  ;; UI preferences
+  (setq mu4e-confirm-quit nil)
+  (setq mu4e-headers-visible-lines 20)
+  (setq mu4e-headers-show-threads nil)
+  (setq mu4e-hide-index-messages t)
+  (setq mu4e-headers-include-related nil)
 
-;;           (defun timu/add-cc-and-bcc ()
+  ;; Citation format
+  (setq message-citation-line-format "%N @ %Y-%m-%d %H:%M :\n")
+  (setq message-citation-line-function 'message-insert-formatted-citation-line)
 
-;;             "My Function to automatically add Cc & Bcc: headers.
+  ;; Store link to message if in header view
+  (setq org-mu4e-link-query-in-headers-mode nil)
 
-;;     This is in the mu4e compose mode."
+  ;; Evil integration
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'mu4e-main-mode 'normal)
+    (evil-set-initial-state 'mu4e-headers-mode 'normal)
+    (evil-set-initial-state 'mu4e-view-mode 'normal)))
 
-;;             (save-excursion (message-add-header "Cc:\n"))
-
-;;             (save-excursion (message-add-header "Bcc:\n"))))
-
-;; ;; mu4e address completion
-;; (add-hook 'mu4e-compose-mode-hook 'company-mode)
-
-;; ;; store link to message if in header view, not to header query:
-;; (setq org-mu4e-link-query-in-headers-mode nil)
-
-;; ;; don't have to confirm when quitting:
-;; (setq mu4e-confirm-quit nil)
-
-;; ;; number of visible headers in horizontal split view:
-;; (setq mu4e-headers-visible-lines 20)
-
-;; ;; don't show threading by default:
-;; (setq mu4e-headers-show-threads nil)
-
-;; ;; hide annoying "mu4e Retrieving mail..." msg in mini buffer:
-;; (setq mu4e-hide-index-messages t)
-
-;; ;; customize the reply-quote-string:
-;; (setq message-citation-line-format "%N @ %Y-%m-%d %H:%M :\n")
-
-;; ;; M-x find-function RET message-citation-line-format for docs:
-;; (setq message-citation-line-function 'message-insert-formatted-citation-line)
-
-;; ;; by default do not show related emails:
-
-;; (setq mu4e-headers-include-related nil)
-
-;; ;; by default do not show threads:
-
-;; (setq mu4e-headers-show-threads nil)
-
-;; (use-package mu4e-alert)
-;; (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
+;; mu4e-alert for notifications
+(use-package mu4e-alert
+  :after mu4e
+  :config
+  (mu4e-alert-enable-mode-line-display)
+  (mu4e-alert-set-default-style 'notifier))

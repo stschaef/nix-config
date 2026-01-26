@@ -27,6 +27,7 @@
 ;; Evil surround - load after evil
 (use-package evil-surround
   :after evil
+  :demand t  ;; Load immediately after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -43,18 +44,21 @@
 ;; Evil visual mark mode
 (use-package evil-visual-mark-mode
   :after evil
+  :demand t
   :config
   (evil-visual-mark-mode 1))
 
 ;; Evil lion - for alignment
 (use-package evil-lion
   :after evil
+  :demand t
   :config
   (evil-lion-mode))
 
-;; Evil collection - defer until magit/other modes load
+;; Evil collection - load after evil for keybindings
 (use-package evil-collection
   :after evil
+  :demand t
   :config
   ;; Only initialize for modes we actually use
   (evil-collection-init '(magit forge vterm ediff dired)))
@@ -62,6 +66,7 @@
 ;; Evil commentary
 (use-package evil-commentary
   :after evil
+  :demand t  ;; Load immediately after evil
   :config
   (evil-commentary-mode 1))
 

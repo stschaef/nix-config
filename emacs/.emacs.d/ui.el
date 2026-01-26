@@ -60,30 +60,6 @@
   (add-hook 'doom-modeline-mode-hook #'my/setup-custom-modeline))
 
 ;;; ============================================================
-;;; Dashboard (load on startup)
-;;; ============================================================
-
-(use-package dashboard
-  :demand t
-  :config
-  (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)
-  (setq dashboard-projects-backend 'projectile)
-  (setq dashboard-projects-sort-function
-        (lambda (projects)
-          (let ((recent-projects-list (projectile-relevant-known-projects)))
-            (if recent-projects-list
-                (seq-take recent-projects-list
-                          (cdr (assoc 'projects dashboard-items)))
-              projects))))
-  (setq dashboard-items '((recents . 10)
-                          (projects . 10)
-                          (bookmarks . 10)))
-  (setq dashboard-center-content t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (dashboard-setup-startup-hook))
-
-;;; ============================================================
 ;;; Deferred UI Packages (load when needed)
 ;;; ============================================================
 
