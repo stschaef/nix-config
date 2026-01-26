@@ -11,8 +11,6 @@ in
         source = ./emacs/.emacs.d;
         recursive = true;
       };
-      ".msmtprc".source = ./emacs/mu4e/.msmtprc;
-      ".mbsyncrc".source = ./emacs/mu4e/.mbsyncrc;
     };
     sessionVariables = {
       EDITOR = "emacsclient -t -a ''";

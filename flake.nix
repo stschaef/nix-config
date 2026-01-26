@@ -42,7 +42,7 @@
       type = "git";
     };
 
-    agda.url = "github:agda/agda/v2.8.0";
+    agda.url = "github:agda/agda/master";
 
     opencode.url = "github:anomalyco/opencode";
 

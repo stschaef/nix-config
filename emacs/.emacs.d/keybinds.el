@@ -70,7 +70,6 @@
     "x" '(scratch-buffer :which-key "Open scratch buffer")
     "d" '(dired-jump :which-key "dired-jump")
     "?" '(consult-ripgrep :which-key "Ripgrep search")
-    "m" '(mu4e :which-key "mu4e")
 
     ;; Config
     "c" '(:ignore t :which-key "Configuration")

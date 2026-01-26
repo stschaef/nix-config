@@ -78,7 +78,6 @@
     ("agents.el" . 11)
     ("org.el" . 20)         ;; Org later (can be deferred)
     ("tex.el" . 20)
-    ("email.el" . 99)
     ("custom.el" . 99))
   "Alist of file patterns and their load priorities.")
 
