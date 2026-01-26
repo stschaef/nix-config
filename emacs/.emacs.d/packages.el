@@ -97,3 +97,34 @@
   ;; Prevent undo-tree files from cluttering your filesystem
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t))
+
+;; Terminal emulator - vterm
+(use-package vterm
+  :config
+  ;; Start vterm in insert state (more natural for terminal use)
+  (evil-set-initial-state 'vterm-mode 'insert)
+
+  ;; Disable line numbers in vterm
+  (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+  ;; Fix: Add Shift+Enter binding for literal newline (for OpenCode multi-line prompts)
+  (define-key vterm-mode-map (kbd "<S-return>")
+    (lambda ()
+      (interactive)
+      (vterm-send-key (kbd "C-j"))))  ;; Send literal newline (C-j) instead of return
+
+  ;; Alternative: M-RET as fallback if S-return doesn't work
+  (define-key vterm-mode-map (kbd "M-<return>")
+    (lambda ()
+      (interactive)
+      (vterm-send-key (kbd "C-j"))))
+
+  ;; Use C-c SPC as prefix to access leader key from within vterm
+  ;; This allows you to use "C-c SPC" followed by your leader commands
+  (with-eval-after-load 'general
+    (general-define-key
+     :keymaps 'vterm-mode-map
+     "C-c SPC" (general-simulate-key "SPC" :state 'normal)))
+
+  ;; Optional: keybinding to quickly open vterm
+  :bind (("C-c t" . vterm)))

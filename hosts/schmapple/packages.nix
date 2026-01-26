@@ -2,6 +2,7 @@
 
 with pkgs; [
   hidden-bar
+  glibtool
   darwin.sigtool
   darwin.apple_sdk.frameworks.Security
 
@@ -60,6 +61,7 @@ EOF
       consult
       hl-todo
       doom-modeline
+      vterm
     ])
   )
 

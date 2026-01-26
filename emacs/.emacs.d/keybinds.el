@@ -57,6 +57,7 @@
     "c" '(:ignore t :which-key "Configuration")
     "cn" '(:ignore t :which-key "Configure Nix")
     "ce" '(:ignore t :which-key "Configure Emacs")
+    "ct" '(:ignore t :which-key "Toggles")
     "cei" '((lambda () (interactive) (find-file nix-config-emacs-init))
             :which-key "Edit init")
     "cek" '((lambda () (interactive) (find-file nix-config-emacs-keybinds))
@@ -68,6 +69,9 @@
     "cnp" '((lambda () (interactive) (find-file nix-config-packages))
             :which-key "Edit Nix packages")
     "cnr" '(nix-rebuild :which-key "Nix rebuild")
+    "cts" '(flyspell-mode :which-key "flyspell-mode")
+    "ctv" '(visual-line-mode :which-key "visual-line-mode")
+    "ctf" '(auto-fill-mode :which-key "auto-fill-mode")
 
     ;; Search bindings
     "s" '(:ignore t :which-key "search")
@@ -119,11 +123,8 @@
     "h w" '(where-is :which-key "where-is")
     "h ." '(display-local-help :which-key "display-local-help")
 
-    ;; Toggles
-    "t" '(:ignore t :which-key "Toggles")
-    "t s" '(flyspell-mode :which-key "flyspell-mode")
-    "t v" '(visual-line-mode :which-key "visual-line-mode")
-    "t f" '(auto-fill-mode :which-key "visual-line-mode")
+    ;; Terminal
+    "t" '(vterm :which-key "Terminal")
 
     ;; Git
     "g" '(:ignore t :which-key "Magit")
