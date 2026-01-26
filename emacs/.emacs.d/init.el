@@ -1,18 +1,25 @@
-;;; init.el --- Main configuration
+;;; init.el --- Main configuration -*- lexical-binding: t; -*-
 
 ;;; ============================================================
-;;; PHASE 1: Package System Setup (NO NETWORK)
+;;; PHASE 1: Package System Setup (NO NETWORK AT STARTUP)
 ;;; ============================================================
 
 (require 'package)
 
-;; Add package repositories
+;; Add package repositories with priorities (prefer faster/reliable ones)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-;; Initialize package system (loads local package metadata only, no network)
+;; Prioritize faster/more reliable archives
+(setq package-archive-priorities
+      '(("melpa" . 3)
+        ("elpa" . 2)
+        ("org" . 1)
+        ("nongnu" . 0)))
+
+;; Initialize package system (loads LOCAL metadata only, NO NETWORK)
 (package-initialize)
 
 ;; Keep user-emacs-directory as ~/.emacs.d for transient files
@@ -33,54 +40,46 @@
       (expand-file-name "transient/levels.el" user-emacs-directory))
 (setq transient-values-file
       (expand-file-name "transient/values.el" user-emacs-directory))
-;;; ============================================================
-;;; PHASE 2: Install Packages (SYNCHRONOUS)
-;;; ============================================================
-
-(message "Installing packages...")
-(condition-case err
-    (progn
-      ;; Refresh package contents on first run or if packages are missing
-      (unless (and (package-installed-p 'use-package)
-                   (file-exists-p (expand-file-name "elpa" user-emacs-directory)))
-        (package-refresh-contents))
-
-      ;; Install use-package if needed
-      (unless (package-installed-p 'use-package)
-        (message "Installing use-package...")
-        (package-install 'use-package))
-
-      ;; Load and configure use-package
-      (require 'use-package)
-      (setq use-package-always-ensure t)
-
-      ;; Install all selected packages
-      (message "Installing selected packages...")
-      (package-install-selected-packages 'no-confirm)
-      (message "All packages installed"))
-  (error
-   (message "Package installation failed: %s"
-            (error-message-string err))))
 
 ;;; ============================================================
-;;; PHASE 3: Load All Your Configuration Files
+;;; PHASE 2: Setup use-package (NO NETWORK REFRESH)
+;;; ============================================================
+
+;; Install use-package ONLY if not already installed
+;; This should only happen on first run
+(unless (package-installed-p 'use-package)
+  (message "First run: installing use-package...")
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Load and configure use-package
+(eval-when-compile
+  (require 'use-package))
+
+;; Configure use-package for lazy loading by default
+(setq use-package-always-ensure t)
+(setq use-package-always-defer t)  ;; CRITICAL: lazy load everything by default
+(setq use-package-expand-minimally t)  ;; Faster macro expansion
+(setq use-package-verbose nil)  ;; Silence output
+
+;;; ============================================================
+;;; PHASE 3: Load Configuration Files (with timing)
 ;;; ============================================================
 
 (defvar my-config-priorities
-  '(
-    ("org.el" . 99)
-    ("agda-setup.el" . 9)
-    ("custom.el" . 99)
-    ("email.el" . 99)
-    ("evil.el" . 5)
-    ("keybinds.el" . 6)
-    ("nix.el" . 5)
+  '(("ui.el" . 1)           ;; UI first for visual feedback
     ("packages.el" . 2)
+    ("nix.el" . 3)
+    ("evil.el" . 4)         ;; Evil early for keybindings
+    ("keybinds.el" . 5)
+    ("utils.el" . 6)
+    ("agda-setup.el" . 10)
     ("search-and-completion.el" . 10)
-    ("tex.el" . 99)
-    ("ui.el" . 2)
     ("agents.el" . 11)
-    ("utils.el" . 10))
+    ("org.el" . 20)         ;; Org later (can be deferred)
+    ("tex.el" . 20)
+    ("email.el" . 99)
+    ("custom.el" . 99))
   "Alist of file patterns and their load priorities.")
 
 (defun my-get-file-priority (filename)
@@ -89,9 +88,11 @@
       (cl-loop for (pattern . priority) in my-config-priorities
                when (string-match-p pattern filename)
                return priority)
-      50)) ; Default priority
+      50))
 
-(let* ((all-files (directory-files user-emacs-directory t "\\`[^.].*\\.el\\'"))
+;; Load configuration files
+(let* ((config-dir (expand-file-name "~/nix-config/emacs/.emacs.d/"))
+       (all-files (directory-files config-dir t "\\`[^.].*\\.el\\'"))
        (config-files (cl-remove-if
                       (lambda (f)
                         (or (string-match-p "init\\.el$" f)
@@ -104,38 +105,44 @@
                             (< (my-get-file-priority (file-name-nondirectory a))
                                (my-get-file-priority (file-name-nondirectory b)))))))
   (dolist (file sorted-files)
-    (message "Loading %s..." (file-name-nondirectory file))
     (condition-case err
-        (load file)
+        (load file nil t)  ;; nil = no message, t = no suffix
       (error
        (message "ERROR loading %s: %s"
                 (file-name-nondirectory file)
                 (error-message-string err))))))
 
-(setq warning-suppress-types '((lsp-mode)))
-
 ;; Load custom-file if it exists
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file nil t))
 
-(message "All configuration files loaded. Emacs is ready!")
+;; Suppress LSP warnings
+(setq warning-suppress-types '((lsp-mode)))
 
 ;;; ============================================================
-;;; PHASE 4: Background Package Updates (ASYNC, OPTIONAL)
+;;; PHASE 4: Restore GC and Finalize
 ;;; ============================================================
 
-;; Optional: Check for package updates in the background
-(run-with-idle-timer
- 5
- nil
- (lambda ()
-   (message "[Background] Checking for package updates...")
-   (condition-case err
-       (progn
-         (package-refresh-contents)
-         (message "[Background] Package update check complete"))
-     (error
-      (message "[Background] Package update check failed: %s"
-               (error-message-string err))))))
+;; Restore GC threshold to reasonable value after startup
+;; 16MB is good for modern machines, prevents thrashing
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 16 1024 1024))
+            (setq gc-cons-percentage 0.1)
+            (message "Emacs ready in %.2f seconds with %d GCs"
+                     (float-time (time-subtract after-init-time before-init-time))
+                     gcs-done)))
+
+;;; ============================================================
+;;; PHASE 5: Manual Package Refresh Command
+;;; ============================================================
+
+;; Provide a command to manually refresh packages when needed
+(defun my/package-refresh ()
+  "Manually refresh package contents. Use this instead of automatic refresh."
+  (interactive)
+  (message "Refreshing package contents...")
+  (package-refresh-contents)
+  (message "Package refresh complete."))
 
 ;;; init.el ends here

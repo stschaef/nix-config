@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# emacs-focus-or-open: Focus existing Emacs window or open a new one
+#
+# Used by aerospace to implement alt+e behavior:
+# - If Emacs GUI window exists: focus it
+# - If no Emacs window: open a new emacsclient frame
+
+# Find first Emacs window ID by matching app-name column (column 2)
+# Format: "window-id | app-name | window-title"
+# gsub removes whitespace, tolower() for case-insensitive match
+EMACS_WIN=$(aerospace list-windows --all | awk -F ' \\| ' '{gsub(/^[ \t]+|[ \t]+$/, "", $2); if (tolower($2) == "emacs") {print $1; exit}}')
+
+if [ -n "$EMACS_WIN" ]; then
+    # Emacs window found - focus it
+    aerospace focus --window-id "$EMACS_WIN"
+else
+    # No Emacs window - open new emacsclient frame
+    # The -a '' flag starts daemon if not running
+    /run/current-system/sw/bin/emacsclient -c -n -a ''
+fi

@@ -1,14 +1,23 @@
+;;; keybinds.el --- Keybinding configuration -*- lexical-binding: t; -*-
+
+;;; ============================================================
+;;; Which-key (load immediately for discoverability)
+;;; ============================================================
+
 (use-package which-key
-  :ensure t
-  :init
-  (which-key-mode)
+  :demand t
   :config
-  (setq which-key-idle-delay 0.3))
+  (setq which-key-idle-delay 0.3)
+  (which-key-mode))
+
+;;; ============================================================
+;;; Helper Functions
+;;; ============================================================
 
 (defun my-universal-argument-with-leader ()
   "Universal argument that temporarily allows leader key chaining."
   (interactive)
-  (let ((general-override-mode nil))  ; Temporarily disable general override
+  (let ((general-override-mode nil))
     (universal-argument)
     (set-transient-map
      (let ((map (make-sparse-keymap)))
@@ -16,7 +25,17 @@
        map)
      t)))
 
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer t t))
+
+;;; ============================================================
+;;; General.el Keybindings
+;;; ============================================================
+
 (use-package general
+  :demand t  ;; Need this immediately for leader key
   :config
   (general-evil-setup t)
   (defconst my-leader "SPC")
@@ -154,7 +173,9 @@
     "n o" '(org-agenda-open-link :which-key "open link at point")
     )
 
-  ;; Magit
+  ;; Magit transient escape
   (general-define-key
     :keymaps 'transient-base-map
     "<escape>" 'transient-quit-one))
+
+;;; keybinds.el ends here

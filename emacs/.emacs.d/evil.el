@@ -1,63 +1,86 @@
+;;; evil.el --- Evil mode configuration -*- lexical-binding: t; -*-
+
+;;; ============================================================
+;;; Core Evil Setup (must load immediately for keybindings)
+;;; ============================================================
+
 (use-package evil
- :ensure t
- :init
-   (setq evil-want-C-u-scroll t)
-   (setq evil-want-keybinding nil)
-   (setq evil-want-minibuffer t)
-   (setq evil-search-module 'evil-search)
-   (setq evil-vsplit-window-right t)
-   (setq evil-split-window-below t)
-   (setq evil-move-cursor-back nil)
- :config
-   (evil-mode 1)
-   (evil-set-initial-state 'Custom-mode 'motion)
-)
+  :demand t  ;; Load immediately - core editing paradigm
+  :init
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-keybinding nil)  ;; Required for evil-collection
+  (setq evil-want-minibuffer t)
+  (setq evil-search-module 'evil-search)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (setq evil-move-cursor-back nil)
+  :config
+  (evil-mode 1)
+  (evil-set-initial-state 'Custom-mode 'motion)
+  (evil-set-undo-system 'undo-tree)
+  (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
+
+;;; ============================================================
+;;; Evil Extensions (defer where possible)
+;;; ============================================================
+
+;; Evil surround - load after evil
 (use-package evil-surround
-  :ensure
+  :after evil
   :config
   (global-evil-surround-mode 1))
+
+;; Vimish fold - defer until needed
 (use-package vimish-fold
-  :ensure
   :after evil
-)
+  :commands (vimish-fold vimish-fold-toggle))
+
+;; Evil vimish fold - hook to modes
 (use-package evil-vimish-fold
-  :ensure
   :after vimish-fold
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
+
+;; Evil visual mark mode
 (use-package evil-visual-mark-mode
-  :ensure t
-  :init (evil-visual-mark-mode 1))
+  :after evil
+  :config
+  (evil-visual-mark-mode 1))
+
+;; Evil lion - for alignment
 (use-package evil-lion
-  :ensure t
+  :after evil
   :config
   (evil-lion-mode))
-;; TODO look into evil embrace
 
+;; Evil collection - defer until magit/other modes load
 (use-package evil-collection
-  :ensure t
-  :after (evil magit)
+  :after evil
   :config
-  (evil-collection-init '(org magit forge mu4e ediff vterm))
-  )
+  ;; Only initialize for modes we actually use
+  (evil-collection-init '(magit forge vterm ediff dired)))
 
+;; Evil commentary
 (use-package evil-commentary
-  :ensure t
-  :init (evil-commentary-mode 1)
- )
-(evil-set-undo-system 'undo-tree)
+  :after evil
+  :config
+  (evil-commentary-mode 1))
 
-(setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes))
-
+;; Evil org - defer until org-mode
 (use-package evil-org
-  :ensure t
-  :after org
+  :after (evil org)
   :hook (org-mode . evil-org-mode)
   :config
-  ;; Enable keybinding themes for org-mode
   (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
+
+;;; ============================================================
+;;; Winner Mode (built-in, fast)
+;;; ============================================================
 
 (winner-mode 1)
 
 ;; Add winner-mode commands to Evil window map
-(define-key evil-window-map "u" 'winner-undo)    ; C-w u
-(define-key evil-window-map "U" 'winner-redo)    ; C-w U (shift-u)
+(with-eval-after-load 'evil
+  (define-key evil-window-map "u" 'winner-undo)
+  (define-key evil-window-map "U" 'winner-redo))
+
+;;; evil.el ends here

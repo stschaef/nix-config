@@ -1,11 +1,17 @@
+;;; org.el --- Org mode configuration -*- lexical-binding: t; -*-
+
+;;; ============================================================
+;;; Org Present (defer until called)
+;;; ============================================================
+
 (use-package visual-fill-column
-  :ensure t)
+  :commands visual-fill-column-mode)
 
 (use-package org-present
-  :ensure t
+  :commands org-present
   :hook ((org-present-mode . my/org-present-start)
          (org-present-mode-quit . my/org-present-end))
-  :init
+  :config
   (defun my/org-present-start ()
     (visual-fill-column-mode 1)
     (visual-line-mode 1)
@@ -26,7 +32,7 @@
     (org-display-inline-images)
     (setq-local cursor-type nil)
 
-    ;; Fix heading alignment - remove leading space after hidden asterisks
+    ;; Fix heading alignment
     (save-excursion
       (goto-char (point-min))
       (while (re-search-forward "^\\*+ " nil t)
@@ -55,30 +61,37 @@
     (display-line-numbers-mode 1)
     (setq-local face-remapping-alist nil)
     (setq-local cursor-type t)
-
-    ;; Remove our custom overlays
     (remove-overlays (point-min) (point-max) 'org-present-heading-space t)
-
-    ;; Restore modeline
     (setq-local mode-line-format my/org-present-modeline-format)
-
     (read-only-mode -1)))
 
+;;; ============================================================
+;;; Org Roam (defer until called)
+;;; ============================================================
+
 (use-package org-roam
-  :ensure t
+  :commands (org-roam-node-find org-roam-node-insert org-roam-capture
+             org-roam-buffer-toggle org-roam-graph org-roam-tag-add
+             org-roam-dailies-capture-today org-roam-setup)
   :init
-  ;; Acknowledge that you're using Org Roam v2
   (setq org-roam-v2-ack t)
   :custom
-  ;; Set the directory where your notes will be stored
   (org-roam-directory "~/org")
   (org-roam-completion-everywhere t)
   :config
-  ;; Initialize the database and setup Org Roam
   (org-roam-setup))
 
-(setq org-agenda-files (list org-roam-directory))
-(setq org-directory "~/org")
+;;; ============================================================
+;;; Org Settings (defer until org loads)
+;;; ============================================================
 
-(evil-set-initial-state 'org-agenda-mode 'normal)
-(setq org-default-notes-file (concat org-directory "/inbox.org"))
+(with-eval-after-load 'org
+  (setq org-agenda-files (list "~/org"))
+  (setq org-directory "~/org")
+  (setq org-default-notes-file (concat org-directory "/inbox.org")))
+
+;; Evil initial state for org-agenda
+(with-eval-after-load 'evil
+  (evil-set-initial-state 'org-agenda-mode 'normal))
+
+;;; org.el ends here

@@ -117,7 +117,7 @@ alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-b = 'workspace b'
-alt-c = 'workspace c'
+alt-e = 'workspace e'
 alt-m = 'workspace m'
 alt-s = 'workspace s'
 alt-v = 'workspace v'
@@ -133,7 +133,7 @@ alt-6 = 'workspace 6'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-b = 'move-node-to-workspace b'
-alt-shift-c = 'move-node-to-workspace c'
+alt-shift-e = 'move-node-to-workspace e'
 alt-shift-m = 'move-node-to-workspace m'
 alt-shift-s = 'move-node-to-workspace s'
 alt-shift-t = 'move-node-to-workspace t'
@@ -149,7 +149,7 @@ alt-shift-6 = 'move-node-to-workspace 6'
 
 alt-a = 'exec-and-forget open -a /Applications/Arc.app'
 alt-z = 'exec-and-forget open -a /Applications/Zen\ Browser.app'
-alt-e = 'exec-and-forget open -a /Applications/Nix\ Apps/Emacs.app'
+alt-c = 'exec-and-forget ~/nix-config/hosts/schmapple/scripts/emacs-focus-or-open'
 alt-t = 'exec-and-forget open -a /Applications/Ghostty.app'
 # alt-t = 'exec-and-forget open -a /Applications/iTerm.app'
 
@@ -183,7 +183,7 @@ alt-shift-l = ['join-with right', 'mode main']
 #
 [workspace-to-monitor-force-assignment]
 b = ["DELL P2723QE", '^built-in retina display$', "DELL P2723QE"]
-c = ["DELL U2718Q", "QHD", "LG", '^built-in retina display$']
+e = ["DELL U2718Q", "QHD", "LG", '^built-in retina display$']
 m = ['^built-in retina display$', "DELL P2723QE"]
 v = ['^built-in retina display$', "DELL P2723QE"]
 s = ['^built-in retina display$', "DELL P2723QE"]
@@ -217,7 +217,7 @@ run = 'move-node-to-workspace v'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'emacs'
-run = 'move-node-to-workspace c'
+run = 'move-node-to-workspace e'
 
 [[on-window-detected]]
 if.app-id = 'org.zulip.zulip-electron'
@@ -258,4 +258,4 @@ run = 'move-node-to-workspace 1'
 [[on-window-detected]]
 if.app-id = 'NULL-APP-BUNDLE-ID'
 if.window-title-regex-substring	= 'python'
-run = 'move-node-to-workspace c'
+run = 'move-node-to-workspace e'

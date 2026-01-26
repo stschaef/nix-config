@@ -1,7 +1,13 @@
+;;; utils.el --- Utility functions -*- lexical-binding: t; -*-
+
+;;; ============================================================
+;;; File Operations
+;;; ============================================================
+
 (defun kill-other-buffers ()
-     "Kill all other buffers."
-     (interactive)
-     (mapc #'kill-buffer (delq (current-buffer) (buffer-list))))
+  "Kill all other buffers."
+  (interactive)
+  (mapc #'kill-buffer (delq (current-buffer) (buffer-list))))
 
 (defun move-this-file (new-path)
   "Move current buffer's file to NEW-PATH."
@@ -9,13 +15,13 @@
    (list (read-file-name "Move file to: ")))
   (unless (and buffer-file-name (file-exists-p buffer-file-name))
     (user-error "Buffer is not visiting any file"))
-  (let ((old-path (buffer-file-name))
+  (let ((old-path (buffer-file-name)))
     (when (directory-name-p new-path)
       (setq new-path (concat new-path (file-name-nondirectory old-path))))
     (make-directory (file-name-directory new-path) 't)
     (rename-file old-path new-path 1)
     (set-visited-file-name new-path t t)
-    (message "File moved to %S" (abbreviate-file-name new-path)))))
+    (message "File moved to %S" (abbreviate-file-name new-path))))
 
 (defun copy-this-file (new-path)
   "Copy current buffer's file to NEW-PATH then open NEW-PATH."
@@ -54,22 +60,33 @@ If PATH is not specified, default to the current buffer's file."
               (kill-buffer buffer)))
           (message "Deleted %S" short-path))))))
 
-
-;; Define a function to copy entire buffer to clipboard
 (defun copy-whole-buffer-to-clipboard ()
-  "Copy entire buffer to clipboard"
+  "Copy entire buffer to clipboard."
   (interactive)
   (clipboard-kill-ring-save (point-min) (point-max))
   (message "Buffer copied to clipboard"))
 
+;;; ============================================================
+;;; Environment (defer initialization)
+;;; ============================================================
+
 (use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
+  :if (memq window-system '(mac ns x))
+  :commands exec-path-from-shell-initialize
+  :init
+  ;; Only run in GUI or daemon mode
+  (when (or (daemonp) (display-graphic-p))
+    (exec-path-from-shell-initialize)))
+
+;;; ============================================================
+;;; Backup Settings
+;;; ============================================================
 
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
+;;; utils.el ends here

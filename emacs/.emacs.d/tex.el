@@ -1,8 +1,12 @@
-(use-package auctex)
+;;; tex.el --- LaTeX configuration -*- lexical-binding: t; -*-
+
+;;; ============================================================
+;;; AUCTeX (defer until .tex files)
+;;; ============================================================
 
 (use-package tex
   :ensure auctex
-  :mode ("\\.tex\\$" . latex-mode)
+  :mode ("\\.tex\\'" . LaTeX-mode)
   :custom
   (TeX-source-correlate-mode t)
   (TeX-source-correlate-method 'synctex)
@@ -11,33 +15,46 @@
   (TeX-electric-math (cons "$" "$"))
   (LaTeX-electric-left-right-brace t)
   (reftex-plug-into-AUCTeX t)
-  (setq TeX-view-program-list
-      '(("Skim" "/run/current-system/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
-  (setq TeX-view-program-selection '((output-pdf "Skim")))
   (TeX-source-correlate-start-server t)
   (TeX-master nil)
-  )
+  :config
+  (setq TeX-view-program-list
+        '(("Skim" "/run/current-system/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+  (setq TeX-view-program-selection '((output-pdf "Skim")))
+  (setq TeX-show-compilation nil))
 
 (use-package auctex-latexmk
-  :ensure t
-  :config (auctex-latexmk-setup)
-        (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+  :after tex
+  :config
+  (auctex-latexmk-setup)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
-(use-package evil-tex)
+;;; ============================================================
+;;; Evil-tex (defer until LaTeX-mode)
+;;; ============================================================
 
-(add-hook 'LaTeX-mode-hook #'evil-tex-mode)
+(use-package evil-tex
+  :hook (LaTeX-mode . evil-tex-mode))
+
+;;; ============================================================
+;;; Company backends for LaTeX (defer until LaTeX-mode)
+;;; ============================================================
 
 (use-package company-auctex
-  :ensure t
-  :init (company-auctex-init))
-(use-package company-reftex :ensure t)
+  :after (tex company)
+  :config
+  (company-auctex-init))
 
-(defun my-latex-mode-setup ()
-  (setq-local company-backends
-              (append '((company-math-symbols-latex company-latex-commands))
-                      company-backends)))
+(use-package company-reftex
+  :after (tex company))
+
 (use-package company-math
-  :ensure t
-  :init (add-hook 'Tex-mode-hook 'my-latex-mode-setup))
+  :after (tex company)
+  :hook (LaTeX-mode . my-latex-mode-setup)
+  :config
+  (defun my-latex-mode-setup ()
+    (setq-local company-backends
+                (append '((company-math-symbols-latex company-latex-commands))
+                        company-backends))))
 
-(setq TeX-show-compilation nil)
+;;; tex.el ends here
