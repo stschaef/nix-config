@@ -14,6 +14,30 @@
   (setq vertico-cycle t)
   (setq vertico-count 20))
 
+;; Make vertico minibuffer navigation work nicely with Evil's normal state.
+;; Allow arrow keys, j/k, and RET to navigate and select completions while
+;; in normal mode (and insert mode still works as before).
+(with-eval-after-load 'vertico
+  (define-key vertico-map (kbd "<down>") #'vertico-next)
+  (define-key vertico-map (kbd "<up>") #'vertico-previous)
+  (define-key vertico-map (kbd "j") #'vertico-next)
+  (define-key vertico-map (kbd "k") #'vertico-previous)
+  (define-key vertico-map (kbd "RET") #'vertico-exit)
+  (define-key vertico-map (kbd "<return>") #'vertico-exit))
+
+;; If Evil is loaded, make sure these bindings are active in Evil's normal
+;; state inside the minibuffer. Evil can shadow `vertico-map` bindings, so
+;; define them specifically for `normal` state.
+(with-eval-after-load 'evil
+  (when (boundp 'vertico-map)
+    (evil-define-key 'normal vertico-map
+      (kbd "<down>") #'vertico-next
+      (kbd "<up>") #'vertico-previous
+      (kbd "j") #'vertico-next
+      (kbd "k") #'vertico-previous
+      (kbd "RET") #'vertico-exit
+      (kbd "<return>") #'vertico-exit)))
+
 ;; Vertico Directory extension
 (use-package vertico-directory
   :after vertico
