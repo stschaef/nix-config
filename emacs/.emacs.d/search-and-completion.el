@@ -18,10 +18,24 @@
 ;; Allow arrow keys, j/k, and RET to navigate and select completions while
 ;; in normal mode (and insert mode still works as before).
 (with-eval-after-load 'vertico
+  ;; j/k should only act as navigation when Evil is in normal state; in
+  ;; insert state they must insert the characters so you can type normally.
+  (defun my/vertico-next-or-self-insert ()
+    (interactive)
+    (if (and (boundp 'evil-state) (eq evil-state 'normal))
+        (vertico-next)
+      (self-insert-command 1)))
+
+  (defun my/vertico-previous-or-self-insert ()
+    (interactive)
+    (if (and (boundp 'evil-state) (eq evil-state 'normal))
+        (vertico-previous)
+      (self-insert-command 1)))
+
   (define-key vertico-map (kbd "<down>") #'vertico-next)
   (define-key vertico-map (kbd "<up>") #'vertico-previous)
-  (define-key vertico-map (kbd "j") #'vertico-next)
-  (define-key vertico-map (kbd "k") #'vertico-previous)
+  (define-key vertico-map (kbd "j") #'my/vertico-next-or-self-insert)
+  (define-key vertico-map (kbd "k") #'my/vertico-previous-or-self-insert)
   (define-key vertico-map (kbd "RET") #'vertico-exit)
   (define-key vertico-map (kbd "<return>") #'vertico-exit))
 
@@ -30,11 +44,14 @@
 ;; define them specifically for `normal` state.
 (with-eval-after-load 'evil
   (when (boundp 'vertico-map)
+    ;; Only define j/k in evil normal state; insert state will still
+    ;; insert characters because we defined helper commands above that
+    ;; call `self-insert-command` when not in normal state.
     (evil-define-key 'normal vertico-map
       (kbd "<down>") #'vertico-next
       (kbd "<up>") #'vertico-previous
-      (kbd "j") #'vertico-next
-      (kbd "k") #'vertico-previous
+      (kbd "j") #'my/vertico-next-or-self-insert
+      (kbd "k") #'my/vertico-previous-or-self-insert
       (kbd "RET") #'vertico-exit
       (kbd "<return>") #'vertico-exit)))
 
