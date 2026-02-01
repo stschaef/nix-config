@@ -45,6 +45,7 @@
     agda.url = "github:agda/agda/master";
 
     opencode.url = "github:anomalyco/opencode";
+    claude-code.url = "github:sadjow/claude-code-nix";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -59,6 +60,7 @@
               zen-browser,
               forester,
               opencode,
+              claude-code,
               agda,
               rust-overlay,
               ... }@inputs:
@@ -84,6 +86,7 @@
 
 
             opencode.packages.aarch64-darwin.default
+            claude-code.packages.aarch64-darwin.default
 
           ];
 
@@ -132,6 +135,23 @@
       modules = [
         ./configuration.nix
         ./hosts/nixos/configuration.nix
+
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [ rust-overlay.overlays.default
+                               agda.overlays.default ];
+
+          environment.systemPackages = [
+            pkgs.rust-bin.stable.latest.default
+            (pkgs.haskell.lib.compose.overrideCabal (drv: {
+              enableLibraryProfiling = true;
+              enableExecutableProfiling = true;
+            }) agda.packages.aarch64-darwin.debug)
+
+            claude-code.packages.aarch64-darwin.default
+          ];
+
+        })
+
 	      home-manager.nixosModules.home-manager {
 	        home-manager.useGlobalPkgs = true;
 	        home-manager.useUserPackages = true;

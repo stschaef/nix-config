@@ -23,6 +23,11 @@
       "mu"
       "cowsay"
     ];
+
+    # Install Karabiner-Elements for keyboard remapping
+    casks = [
+      "karabiner-elements"
+    ];
   };
 
   # Used for backwards compatibility

@@ -13,6 +13,10 @@
       source = ./aerospace;
       recursive = true;
     };
+    ".config/karabiner" = {
+      source = ./karabiner;
+      recursive = true;
+    };
     ".config/opencode" = {
       source = ./opencode;
       recursive = true;

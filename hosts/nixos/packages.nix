@@ -16,7 +16,14 @@ with pkgs; [
 
   ethtool
 
-  emacs30
+  ((pkgs.emacsPackagesFor pkgs.emacs30).emacsWithPackages (epkgs: with epkgs; [
+    magit
+    consult
+    hl-todo
+    doom-modeline
+    vterm
+  ]))
+
 
   protontricks
   winetricks

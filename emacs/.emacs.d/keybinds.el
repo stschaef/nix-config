@@ -177,4 +177,52 @@
     :keymaps 'transient-base-map
     "<escape>" 'transient-quit-one))
 
+  (defvar my-scroll-timer nil)
+  (defvar my-scroll-stop-timer nil)
+
+  (defun my-stop-scroll ()
+    (when my-scroll-timer
+      (cancel-timer my-scroll-timer)
+      (setq my-scroll-timer nil))
+    (when my-scroll-stop-timer
+      (cancel-timer my-scroll-stop-timer)
+      (setq my-scroll-stop-timer nil)))
+
+  (defun my-scroll-viewport (direction lines)
+    "Scroll viewport while keeping cursor at same screen position"
+    (condition-case nil
+        (if (eq direction 'down)
+            (progn
+              (scroll-up-line lines)
+              (evil-next-line lines))
+          (progn
+            (scroll-down-line lines)
+            (evil-previous-line lines)))
+      (error (my-stop-scroll))))
+
+  (defun my-continuous-scroll (direction lines)
+    (when my-scroll-timer (cancel-timer my-scroll-timer))
+    (when my-scroll-stop-timer (cancel-timer my-scroll-stop-timer))
+
+    (setq my-scroll-timer
+          (run-with-timer 0 0.01
+            (lambda ()
+              (my-scroll-viewport direction lines))))
+
+    (setq my-scroll-stop-timer
+          (run-with-idle-timer 0.1 nil 'my-stop-scroll)))
+
+  (defun my-scroll-down-continuous ()
+    (interactive)
+    (my-continuous-scroll 'down 1))
+
+  (defun my-scroll-up-continuous ()
+    (interactive)
+    (my-continuous-scroll 'up 1))
+
+  (evil-define-key 'normal 'global
+    (kbd "M-j") 'my-scroll-down-continuous
+    (kbd "<next>") 'my-scroll-down-continuous
+    (kbd "M-k") 'my-scroll-up-continuous
+    (kbd "<prior>") 'my-scroll-up-continuous)
 ;;; keybinds.el ends here
