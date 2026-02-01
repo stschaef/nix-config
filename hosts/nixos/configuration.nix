@@ -17,6 +17,9 @@
   };
 
   fonts.fontconfig.enable = true;
+  fonts.packages = with pkgs; [
+    julia-mono
+  ];
 
   networking = {
     hostName = "nixos"; # Define your hostname.
@@ -67,14 +70,14 @@
       gdm.enable = true;
     };
     desktopManager.gnome.enable = true;
-    xkb = {
-      layout = "us";
-      variant = "";
-      options = "caps:swapescape";
-    };
   };
 
-  services.displayManager.defaultSession = "gnome";
+  services.displayManager.defaultSession = "hyprland";
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   console.useXkbConfig = true;
 
@@ -83,9 +86,20 @@
     open = true;
 
     nvidiaSettings = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+  # Hyprland + NVIDIA environment variables
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    XDG_SESSION_TYPE = "wayland";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    NVD_BACKEND = "direct";
+  };
+
+  hardware.keyboard.qmk.enable = true;
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;

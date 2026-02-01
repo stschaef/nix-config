@@ -7,6 +7,17 @@ with pkgs; [
   gparted
   zoxide
   thefuck
+  chromium
+
+  # Hyprland essentials
+  wofi
+  waybar
+  dunst
+  wl-clipboard
+  grim
+  slurp
+  swww
+  hyprlock
 
   vulkan-tools
   vulkan-loader

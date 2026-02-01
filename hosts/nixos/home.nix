@@ -16,6 +16,7 @@
       /home/steven/agda-stdlib/standard-library.agda-lib
       /home/steven/cubical-categorical-logic/cubical-categorical-logic.agda-lib
     '';
+    ".config/hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
     };
   };
 

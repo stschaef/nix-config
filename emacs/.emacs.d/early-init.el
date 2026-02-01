@@ -45,6 +45,13 @@
             (redisplay)))
 
 ;;; ============================================================
+;;; EVIL SETUP - Must be set before evil or evil-collection loads
+;;; ============================================================
+
+;; Required for evil-collection - must be set before evil loads
+(setq evil-want-keybinding nil)
+
+;;; ============================================================
 ;;; NETWORK & GPG - Fix hanging issues
 ;;; ============================================================
 
@@ -57,7 +64,8 @@
 (setq url-http-attempt-keepalives nil)
 
 ;; Set GPG program explicitly (prevents hanging on keyring import)
-(setq epg-gpg-program "/opt/homebrew/bin/gpg")
+(when (eq system-type 'darwin)
+  (setq epg-gpg-program "/opt/homebrew/bin/gpg"))
 
 ;; Prevent GPG from prompting for passphrase in minibuffer
 (setq epg-pinentry-mode 'loopback)
