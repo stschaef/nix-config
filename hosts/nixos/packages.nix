@@ -27,7 +27,7 @@ with pkgs; [
 
   ethtool
 
-  ((pkgs.emacsPackagesFor pkgs.emacs30).emacsWithPackages (epkgs: with epkgs; [
+  ((pkgs.emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (epkgs: with epkgs; [
     magit
     consult
     hl-todo

@@ -19,6 +19,7 @@
   fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
     julia-mono
+    nerd-fonts.jetbrains-mono
   ];
 
   networking = {
@@ -160,6 +161,8 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  programs.ssh.startAgent = true;
 
   programs.steam = {
     enable = true;

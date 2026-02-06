@@ -5,7 +5,7 @@
 ;;; ============================================================
 
 ;; These are fast and should run immediately
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 (scroll-bar-mode 1)
 (tool-bar-mode -1)
 (line-number-mode 1)
@@ -133,5 +133,9 @@
           :scroll-bar-width 8
           :fringe-width 10))
   :hook (emacs-startup . spacious-padding-mode))
+
+(when (eq system-type 'gnu/linux)
+  (set-frame-parameter nil 'alpha-background 90)
+  (add-to-list 'default-frame-alist '(alpha-background . 90)))
 
 ;;; ui.el ends here

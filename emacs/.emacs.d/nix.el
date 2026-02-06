@@ -1,4 +1,7 @@
-(defvar nix-config-root "/Users/stevenschaefer/nix-config"
+(defvar nix-config-root
+  (if (eq system-type 'gnu/linux)
+      "/home/steven/nix-config"
+    "/Users/stevenschaefer/nix-config")
   "Root directory of the Nix configuration.")
 
 (defvar nix-config-emacs-d-dir (expand-file-name "emacs/.emacs.d" nix-config-root)
