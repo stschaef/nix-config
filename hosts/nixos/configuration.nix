@@ -109,6 +109,21 @@
     libvdpau-va-gl
   ];
 
+  # Remap Super+C/V to Ctrl+C/V globally (macOS-like Cmd shortcuts)
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = ["*"];
+      settings = {
+        main = {};
+        meta = {
+          c = "C-c";
+          v = "C-v";
+        };
+      };
+    };
+  };
+
   services.openssh = {
     enable = true;
     settings = {
