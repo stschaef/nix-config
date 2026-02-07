@@ -151,6 +151,22 @@
   (setq consult-ripgrep-args
         "rg --hidden --null --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --with-filename --line-number --search-zip"))
 
+(defun my/buffer-sort-by-mode (buffers)
+  "Sort BUFFERS by major-mode name, then alphabetically."
+  (sort buffers
+        (lambda (a b)
+          (let ((mode-a (symbol-name (buffer-local-value 'major-mode (get-buffer a))))
+                (mode-b (symbol-name (buffer-local-value 'major-mode (get-buffer b)))))
+            (if (string= mode-a mode-b)
+                (string< a b)
+              (string< mode-a mode-b)))))
+  (setq consult--source-buffer
+      (plist-put consult--source-buffer :items
+                 (lambda ()
+                   (my/buffer-sort-by-mode
+                    (consult--buffer-query :sort 'alpha
+                                           :as #'buffer-name))))
+
 ;;; ============================================================
 ;;; Embark - Contextual actions (defer until called)
 ;;; ============================================================
